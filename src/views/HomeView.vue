@@ -1,15 +1,21 @@
 <!-- Page that allow to views multiple charts related to  mix energie -->
 <!--
 TODO :
-  - fetch  data in pinia (mix energie en france)
-  - retreive data  in components
+  - Compute data to be exploitable for charts
   - display chart along right data
   - add description to chart
-  - refactor chart component
+  - Maybe add select / calendar to filter data && charts
+  - Make chart component works with real data
+  - Finish /frenchMap
   - Add style
+  - Move fetch API and compute data to an SERVER
 -->
 <script setup>
 import ChartComponent from '../components/ChartComponent.vue';
+import { useMixEnergieStore } from '@/stores/mixEnergieStore';
+
+const mixEnergieStore = useMixEnergieStore();
+mixEnergieStore.getMixEnergyData;
 
 const chartOptions = {
   series: [
