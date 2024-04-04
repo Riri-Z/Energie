@@ -1,17 +1,15 @@
 <script setup>
 // data to display
 const props = defineProps({
-  chartOptions: Object,
-  msg: String
+  chartOptions: Object
 });
 </script>
 
 <template>
-  <p>{{ props.msg }}</p>
   <highcharts :options="props.chartOptions"></highcharts>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .chart-container {
   display: flex;
   flex-direction: column;
@@ -20,11 +18,10 @@ const props = defineProps({
   font-size: 2.5em;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 </style>
 
 <!--
-
-
                     "dataset_id": "nb-clients-prod-region",
  -->

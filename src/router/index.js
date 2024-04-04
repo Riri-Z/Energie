@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import FrenchMap from '@/views/FrenchMap.vue';
-import ChartsView from '../views/ChartsView.vue';
+import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: ChartsView
+      component: HomeView
     },
     {
       path: '/frenchMap',
