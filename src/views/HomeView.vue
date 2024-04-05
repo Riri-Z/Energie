@@ -15,7 +15,30 @@ import ChartComponent from '../components/ChartComponent.vue';
 import { useMixEnergieStore } from '@/stores/mixEnergieStore';
 
 const mixEnergieStore = useMixEnergieStore();
-mixEnergieStore.getMixEnergyData;
+mixEnergieStore.getAllAvailableMixEnergyData();
+mixEnergieStore.getConsoElecGaz();
+let chartOptionsConsoElecGaz = mixEnergieStore.getConsoElecGaz().optionsChartConsoElecGaz;
+console.log('chartOptionsConsoElecGaz', chartOptionsConsoElecGaz);
+
+const testChartOptions = {
+  chart: {
+    type: 'column'
+  },
+  title: {
+        text: 'Data input as column arrays'
+      },
+  series: [
+
+  {
+      name: 'Corn',
+      data: [406292, 260000, 107000, 68300, 27500, 14500]
+    },
+    {
+      name: 'Wheat',
+      data: [51086, 136000, 5500, 141000, 107180, 77000]
+    }]
+
+};
 
 const chartOptions = {
   series: [
@@ -28,9 +51,8 @@ const chartOptions = {
 
 <template>
   <div class="chart-container">
-    <ChartComponent :chartOptions="chartOptions" />
-    <ChartComponent :chartOptions="chartOptions" />
-    <ChartComponent :chartOptions="chartOptions" />
+    <ChartComponent :chartOptions="chartOptionsConsoElecGaz" />
+    <ChartComponent :chartOptions="testChartOptions" />
     <ChartComponent :chartOptions="chartOptions" />
   </div>
 </template>

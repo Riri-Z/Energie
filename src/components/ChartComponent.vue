@@ -3,6 +3,7 @@
 const props = defineProps({
   chartOptions: Object
 });
+console.log('props.chartOptions', props.chartOptions);
 </script>
 
 <template>

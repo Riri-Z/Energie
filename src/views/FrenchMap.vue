@@ -61,7 +61,15 @@ const chartOption = {
 
 <template>
   <div>
-    <h1>Overview french map</h1>
+    <h1>
+      Consommation annuelle d’électricité et gaz par région et par secteur d’activité (jusqu'en
+      2021)
+    </h1>
+    <p>
+      Permet de visualiser l’évolution de 2011 à 2021 des consommations d'électricité et de gaz par
+      secteur d'activité (résidentiel, tertiaire, industriel, agricole ou non affecté) et par
+      région.
+    </p>
     <highcharts
       :constructorType="`mapChart`"
       class="hc"
