@@ -3,26 +3,16 @@
 const props = defineProps({
   chartOptions: Object
 });
-console.log('props.chartOptions', props.chartOptions);
 </script>
 
 <template>
-  <highcharts :options="props.chartOptions"></highcharts>
+  <highcharts class="chart" :options="props.chartOptions"></highcharts>
 </template>
 
 <style lang="scss" scoped>
-.chart-container {
-  display: flex;
-  flex-direction: column;
-}
-.chart-title {
-  font-size: 2.5em;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.chart {
+  min-height: 400px;
+  max-width: 100%;
+  width: 100%;
 }
 </style>
-
-<!--
-                    "dataset_id": "nb-clients-prod-region",
- -->
