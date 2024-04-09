@@ -1,26 +1,27 @@
-<!-- Page that allow to views multiple charts related to  mix energie -->
-<!--
-TODO :
-
-
-  - Maybe add select / calendar to filter data && charts
-  - Finish /frenchMap
-  - Add style
--->
 <script setup>
-import ChartComponent from '../components/ChartComponent.vue';
+import ChartComponent from '@/components/ChartComponent.vue';
 import { useMixEnergieStore } from '@/stores/mixEnergieStore';
+import ErrorComponent from '@/components/ErrorComponent.vue';
 
 const mixEnergieStore = useMixEnergieStore();
 mixEnergieStore.getConsoElecGaz();
-let chartOptionsConsoElecGaz = mixEnergieStore.getConsoElecGaz().optionsChartConsoElecGaz;
+/*mixEnergieStore.getECO2mixRealTimeData(); */
 </script>
 
 <template>
-  <div class="content">
-    <ChartComponent :chartOptions="chartOptionsConsoElecGaz" />
-    <h1 class="content-mix-energie-title">Données éCO2mix nationales temps réel</h1>
-    <p class="content-mix-energie-description">
+  <div class="home-view-content">
+    <ChartComponent
+      v-if="mixEnergieStore.chartOptionsConsoElecGaz"
+      :chartOptions="mixEnergieStore.chartOptionsConsoElecGaz"
+    />
+
+    <ErrorComponent
+      v-else
+      mainTitle="Erreur pour le graphique Consommation d'électricité et de gaz (2011 à 2021)"
+    />
+
+    <h1 class="home-view-content-mix-energie-title">Données éCO2mix nationales temps réel</h1>
+    <p class="home-view-content-mix-energie-description">
       Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
       been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
       galley of type and scrambled it to make a type specimen book. It has survived not only five
@@ -29,16 +30,23 @@ let chartOptionsConsoElecGaz = mixEnergieStore.getConsoElecGaz().optionsChartCon
       passages, and more recently with desktop publishing software like Aldus PageMaker including
       versions of Lorem Ipsum.
     </p>
-    <ChartComponent :chartOptions="chartOptionsConsoElecGaz" />
+    <ChartComponent :chartOptions="mixEnergieStore.chartOptionsConsoElecGaz" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.content {
+.home-view-content {
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  justify-content: center;
   height: 100vh;
+  &-mix-energie {
+    &-title {
+      font-family: 'Quicksand-bold';
+    }
+    &-description {
+      font-family: 'Quicksand';
+    }
+  }
 }
 </style>
