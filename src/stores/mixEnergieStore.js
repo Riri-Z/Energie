@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { DateTime } from 'luxon';
-import { BASE_ODRE_URL, ECO2_MIX_NATIONAL_DATASET_PER_DAY } from '@/utils/constants';
 
 export const useMixEnergieStore = defineStore('mixEnergie', () => {
   const chartOptionsConsoElecGaz = ref(null);
@@ -86,43 +84,6 @@ export const useMixEnergieStore = defineStore('mixEnergie', () => {
       console.error('Error fetching or processing data:', error);
     }
   };
-  /**
-   * - Compute data  to display ECO2mix_daily
-   * @returns {Object}
-   */
-  const getECO2mixRealTimeData = async () => {
-    let todayDate = DateTime.now();
-    let year = todayDate.c.year;
-    let month = todayDate.c.month;
-    let day = todayDate.c.day;
 
-    const result = fetchECO2();
-
-    return 'getECO2mixRealTimeData';
-  };
-
-  async function fetchConsoGazElecTotal() {
-    try {
-      /* URL  à mettre .env */
-    } catch (error) {
-      console.error('Error fetching or processing data:', error);
-      return false;
-    }
-  }
-
-  async function fetchECO2(date) {
-    /* %3A%222024%2F04%2F01%22 */
-
-    const URL = BASE_ODRE_URL + ECO2_MIX_NATIONAL_DATASET_PER_DAY + '%3A';
-    /*     const response = await fetch(URL);
-        if (!response.ok) {
-          throw new Error(`An error has occured: ${response.status})`);
-        } */
-    const result = 'ok';
-    /* await response.json();
-     */ return result;
-  }
-  /******END METHODS******/
-
-  return { getConsoElecGaz, getECO2mixRealTimeData, chartOptionsConsoElecGaz };
+  return { getConsoElecGaz, chartOptionsConsoElecGaz };
 });
