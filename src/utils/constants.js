@@ -11,5 +11,5 @@ export const DATA_LIMIT = 100;
 export const SELECT_FIELDS =
   'records?select=fioul%2C%20charbon%2Cgaz%2Cnucleaire%2Cdate%2Cconsommation';
 
-/* Limitation BDD, les données s'arretent  en 2024-04-28,23h59 pour l'instant */
-export const LIMIT_DATE_DATA = 'April 08, 2024 23:59:00';
+/* Limite database for now */
+export const LIMIT_DATE_DATA = 'April 08, 2024 23:59:59';
