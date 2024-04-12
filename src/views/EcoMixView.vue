@@ -18,6 +18,8 @@
             v-model="dateStart"
             @update:modelValue="ondateStartChange"
             :upper-limit="limitDateStart"
+            :lower-limit="new Date(LIMIT_START_DATE_DATA)"
+            inputFormat="dd-MM-yyyy"
           />
         </div>
         <div class="eco-mix-view-content-selection-periode-end">
@@ -26,10 +28,23 @@
             v-model="dateEnd"
             @update:modelValue="ondateEndChange"
             :upper-limit="limitDateEnd"
+            :lowerLimit="eco2MixStore.dateStart"
+            inputFormat="dd-MM-yyyy"
           />
         </div>
+        <div class="eco-mix-view-content-selection-periode-refresh">
+          <button class="eco-mix-view-content-selection-periode-refresh-btn" @click="updateChart">
+            <img
+              class="eco-mix-view-content-selection-periode-refresh-btn-icon"
+              :src="refresh"
+              alt="button-refresh"
+            />
+            <p class="eco-mix-view-content-selection-periode-refresh-btn-text">
+              Actualiser le graphique
+            </p>
+          </button>
+        </div>
       </div>
-      <button @click="updateChart">FETCH</button>
     </section>
 
     <section class="chart">
@@ -48,7 +63,8 @@ import Datepicker from 'vue3-datepicker';
 import ChartComponent from '@/components/ChartComponent.vue';
 import { ref } from 'vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
-
+import refresh from '@/assets/icons/refresh.png';
+import { LIMIT_START_DATE_DATA } from '@/utils/constants';
 const eco2MixStore = useEco2mixStore();
 const dateStart = ref(eco2MixStore.dateStart);
 const dateEnd = ref(eco2MixStore.dateEnd);
@@ -84,6 +100,15 @@ const ondateStartChange = (payload) => {
     flex-direction: row;
     justify-content: center;
     gap: 20px;
+    &-refresh {
+      display: flex;
+      flex-direction: row;
+      &-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
   }
 }
 </style>

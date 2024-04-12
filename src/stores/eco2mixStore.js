@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia';
-import { LIMIT_DATE_DATA } from '@/utils/constants';
+import { LIMIT_END_DATE_DATA } from '@/utils/constants';
 import { isoStringToUtC2, timeStampTotimeStampPlus2 } from '@/utils/convertDate';
-const todayDate = new Date(LIMIT_DATE_DATA);
+const todayDate = new Date(LIMIT_END_DATE_DATA);
 
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
     chartOptionsEco2Mix: null,
-    limitDateStart: new Date(LIMIT_DATE_DATA),
+    limitDateStart: new Date(LIMIT_END_DATE_DATA),
     dateStart: new Date(todayDate.setHours(0, 0, 0, 0)),
-    limitDateEnd: new Date(LIMIT_DATE_DATA),
-    dateEnd: new Date(LIMIT_DATE_DATA)
+    limitDateEnd: new Date(LIMIT_END_DATE_DATA),
+    dateEnd: new Date(LIMIT_END_DATE_DATA)
   }),
   getters: {
     /*  dateStart: (state) => state.dateStart,
@@ -18,6 +18,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
   actions: {
     selectdateStart(newValue) {
       this.dateStart = newValue;
+    },
+    handleLimitDateEnd(newValue) {
+      this.limitDateEnd = newValue;
     },
     selectdateEnd(newValue) {
       this.dateEnd = newValue;
@@ -50,69 +53,71 @@ export const useEco2mixStore = defineStore('eco2mix', {
         method,
         headers
       });
-      const data = await response.json();
+      const result = await response.json();
 
-      if (Array.isArray(data.data) && data.data.length > 0) {
+      if (Array.isArray(result.data) && result.data.length > 0) {
+        const values = result.data;
+
         const seriesData = [
           {
             name: 'Fioul',
-            data: data.data.map((item) => [
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.fioul
             ])
           },
           {
             name: 'Charbon',
-            data: data.data.map((item) => [
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.charbon
             ])
           },
           {
             name: 'Gaz',
-            data: data.data.map((item) => [
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.gaz
             ])
           },
           {
-            name: 'nucleaire',
-            data: data.data.map((item) => [
+            name: 'Nucleaire',
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.nucleaire
             ])
           },
           {
-            name: 'eolien',
-            data: data.data.map((item) => [
+            name: 'Eolien',
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.eolien
             ])
           },
           {
-            name: 'solaire',
-            data: data.data.map((item) => [
+            name: 'Solaire',
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.solaire
             ])
           },
           {
-            name: 'hydraulique',
-            data: data.data.map((item) => [
+            name: 'Hydraulique',
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.hydraulique
             ])
           },
           {
-            name: 'pompage',
-            data: data.data.map((item) => [
+            name: 'Pompage',
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.pompage
             ])
           },
           {
-            name: 'bioenergies',
-            data: data.data.map((item) => [
+            name: 'Bioenergies',
+            data: values.map((item) => [
               timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
               item.bioenergies
             ])
@@ -124,20 +129,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
             type: 'area'
           },
           title: {
-            text: "Production d'énergie",
-            align: 'left'
-          },
-          subtitle: {
-            text:
-              'Source: ' +
-              '<a href="https://www.ssb.no/en/statbank/table/09288/"' +
-              'target="_blank">SSB</a>',
+            text: "La production d'électricité par filière",
             align: 'left'
           },
           yAxis: {
             title: {
               useHTML: true,
-              text: 'Million tonnes CO<sub>2</sub>-equivalents'
+              text: 'MW'
             }
           },
           xAxis: {
@@ -160,7 +158,6 @@ export const useEco2mixStore = defineStore('eco2mix', {
 
         this.chartOptionsEco2Mix = chartConfiguration;
 
-        console.log('chartConfiguration', chartConfiguration);
         return 'getECO2mixRealTimeData';
       }
     }
