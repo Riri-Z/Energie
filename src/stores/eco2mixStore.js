@@ -5,18 +5,18 @@ const todayDate = new Date(LIMIT_END_DATE_DATA);
 
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
+    limit_end_data: null,
     chartOptionsEco2Mix: null,
     limitDateStart: new Date(LIMIT_END_DATE_DATA),
     dateStart: new Date(todayDate.setHours(0, 0, 0, 0)),
     limitDateEnd: new Date(LIMIT_END_DATE_DATA),
     dateEnd: new Date(LIMIT_END_DATE_DATA)
   }),
-  getters: {
-    /*  dateStart: (state) => state.dateStart,
-     dateEnd: (state) => state.dateEnd, */
-  },
+  getters: {},
   actions: {
     selectdateStart(newValue) {
+      console.log('newValue', newValue);
+
       this.dateStart = newValue;
     },
     handleLimitDateEnd(newValue) {
@@ -25,7 +25,23 @@ export const useEco2mixStore = defineStore('eco2mix', {
     selectdateEnd(newValue) {
       this.dateEnd = newValue;
     },
+    async getLastDateAvailable() {
+      const url = new URL('http://localhost:3000/eco2mix/lastRecord');
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      const method = 'GET';
 
+      const response = await fetch(url, {
+        method,
+        headers
+      });
+      const result = await response.json();
+      if (result.date != null) {
+        this.limit_end_data = result.date;
+      }
+      return true;
+    },
     /**
      * - Compute data  to display ECO2mix_daily
      * @returns {Object}
@@ -128,6 +144,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
           chart: {
             type: 'area'
           },
+          caption: {
+            text: '<b>The caption renders in the bottom, and is part of the exported chart.</b>'
+          },
           title: {
             text: "La production d'électricité par filière",
             align: 'left'
@@ -153,9 +172,11 @@ export const useEco2mixStore = defineStore('eco2mix', {
             align: 'center',
             verticalAlign: 'top'
           },
-          series: seriesData
+          series: seriesData,
+          accessibility: {
+            enabled: false
+          }
         };
-
         this.chartOptionsEco2Mix = chartConfiguration;
 
         return 'getECO2mixRealTimeData';

@@ -6,8 +6,9 @@
 <template>
   <header>
     <nav class="navbar">
-      <router-link :to="{ name: 'Home' }">HOME</router-link>
-      <router-link to="/eco2mix">eco2mix</router-link>
+      <!--
+      <router-link :to="{ name: 'Home' }">HOME</router-link> -->
+      <router-link to="/">eco2mix</router-link>
       <router-link to="/frenchMap">FrenchMap</router-link>
     </nav>
   </header>

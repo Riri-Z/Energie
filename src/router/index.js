@@ -5,13 +5,13 @@ import EcoMixView from '@/views/EcoMixView.vue';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    /*    {
+         path: '/',
+         name: 'Home',
+         component: HomeView
+       }, */
     {
       path: '/',
-      name: 'Home',
-      component: HomeView
-    },
-    {
-      path: '/eco2mix',
       name: 'Eco2Mix',
       component: EcoMixView
     },
