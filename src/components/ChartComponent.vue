@@ -12,5 +12,6 @@ const props = defineProps({
 <style lang="scss" scoped>
 .chart {
   min-height: 400px;
+  max-width: 100%;
 }
 </style>

@@ -16,7 +16,7 @@ export default defineConfig({
       scss: {
         additionalData: `
         @import "@/assets/abstracts/_fonts.scss";
-        @import "@/assets/abstracts/_mixins.scss";
+        @import "@/assets/abstracts/_breakpoints.scss";
         `
       }
     }
