@@ -7,6 +7,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
     limit_end_data: null,
     chartOptionsEco2Mix: null,
+    chartCo2Emission: null,
     limitDateStart: new Date(LIMIT_END_DATE_DATA),
     dateStart: new Date(todayDate.setHours(0, 0, 0, 0)),
     limitDateEnd: new Date(LIMIT_END_DATE_DATA),
@@ -74,6 +75,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
       if (Array.isArray(result.data) && result.data.length > 0) {
         const values = result.data;
 
+        /* Mix energie chart */
         const seriesData = [
           {
             name: 'Fioul',
@@ -140,12 +142,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
           }
         ];
 
-        const chartConfiguration = {
+        const chartOptionsEco2Mix = {
           chart: {
             type: 'area'
-          },
-          caption: {
-            text: '<b>The caption renders in the bottom, and is part of the exported chart.</b>'
           },
           title: {
             text: "La production d'électricité par filière",
@@ -177,8 +176,58 @@ export const useEco2mixStore = defineStore('eco2mix', {
             enabled: false
           }
         };
-        this.chartOptionsEco2Mix = chartConfiguration;
 
+        /* CO2 chart */
+        const xAxisCo2 = {
+          categories: values.map((item) => {
+            const date = timeStampTotimeStampPlus2(Date.parse(item.date_heure));
+
+            return date;
+          }),
+          accessibility: {
+            description: 'Heure du relevé'
+          },
+          labels: {
+            format: '{value:%d-%m %H:%M:%S}'
+          },
+          type: 'datetime',
+          title: {
+            text: 'Date Heure'
+          }
+        };
+
+        const seriesCo2 = [
+          {
+            name: 'Taux de Co2',
+
+            data: values.map((item) => {
+              return item.taux_co2;
+            })
+          }
+        ];
+        const chartCo2Emission = {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'Émissions de CO2 par kWh produit en France'
+          },
+          xAxis: xAxisCo2,
+
+          yAxis: {
+            title: {
+              text: 'Taux Co2 eq/kwh'
+            }
+          },
+          tooltip: {
+            crosshairs: true,
+            shared: true
+          },
+
+          series: seriesCo2
+        };
+        this.chartOptionsEco2Mix = chartOptionsEco2Mix;
+        this.chartCo2Emission = chartCo2Emission;
         return 'getECO2mixRealTimeData';
       }
     }
