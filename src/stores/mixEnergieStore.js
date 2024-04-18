@@ -12,8 +12,8 @@ export const useMixEnergieStore = defineStore('mixEnergie', () => {
       let response = await fetch('http://localhost:3000/total_conso_gaz_elec', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
       if (!response.ok) {
         throw new Error(`An error has occured: ${response})`);
@@ -43,41 +43,41 @@ export const useMixEnergieStore = defineStore('mixEnergie', () => {
 
       const optionsChartConsoElecGaz = {
         chart: {
-          type: 'column'
+          type: 'column',
         },
         title: {
           text: "Consommation d'électricité et de gaz (2011 à 2021)",
-          align: 'center'
+          align: 'center',
         },
         xAxis: {
           categories: yearsAvailable,
           crosshair: true,
           accessibility: {
-            description: 'Years'
-          }
+            description: 'Years',
+          },
         },
         yAxis: {
           min: 0,
           title: {
-            text: 'Somme Consommation total (MWh)'
-          }
+            text: 'Somme Consommation total (MWh)',
+          },
         },
         plotOptions: {
           column: {
             pointPadding: 0.2,
-            borderWidth: 0
-          }
+            borderWidth: 0,
+          },
         },
         series: [
           {
             name: 'Electricite',
-            data: electriciteSerie
+            data: electriciteSerie,
           },
           {
             name: 'Gaz',
-            data: gazSerie
-          }
-        ]
+            data: gazSerie,
+          },
+        ],
       };
       chartOptionsConsoElecGaz.value = optionsChartConsoElecGaz;
     } catch (error) {
