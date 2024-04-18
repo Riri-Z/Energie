@@ -4,34 +4,34 @@
 import frenchMap from '@highcharts/map-collection/countries/fr/fr-all.topo.json';
 const chartOption = {
   chart: {
-    map: frenchMap
+    map: frenchMap,
   },
   title: {
-    text: 'Highmaps basic demo'
+    text: 'Highmaps basic demo',
   },
   subtitle: {
-    text: 'Source map: <a href="http://code.highcharts.com/mapdata/custom/world.js">World, Miller projection, medium resolution</a>'
+    text: 'Source map: <a href="http://code.highcharts.com/mapdata/custom/world.js">World, Miller projection, medium resolution</a>',
   },
   mapNavigation: {
     enabled: true,
     buttonOptions: {
-      alignTo: 'spacingBox'
-    }
+      alignTo: 'spacingBox',
+    },
   },
   colorAxis: {
-    min: 0
+    min: 0,
   },
   series: [
     {
       name: 'Random data',
       states: {
         hover: {
-          color: '#BADA55'
-        }
+          color: '#BADA55',
+        },
       },
       dataLabels: {
         enabled: true,
-        format: '{point.name}'
+        format: '{point.name}',
       },
       allAreas: false,
       data: [
@@ -52,10 +52,10 @@ const chartOption = {
         ['fr-may', 24],
         ['fr-gf', 25],
         ['fr-mq', 26],
-        ['fr-gua', 27]
-      ]
-    }
-  ]
+        ['fr-gua', 27],
+      ],
+    },
+  ],
 };
 </script>
 

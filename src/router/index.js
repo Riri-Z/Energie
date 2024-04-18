@@ -8,14 +8,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'Eco2Mix',
-      component: EcoMixView
+      component: EcoMixView,
     },
     {
       path: '/frenchMap',
       name: 'FrenchMap',
-      component: FrenchMap
-    }
-  ]
+      component: FrenchMap,
+    },
+  ],
 });
 
 export default router;
