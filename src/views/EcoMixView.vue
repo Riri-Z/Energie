@@ -12,7 +12,11 @@
 
       <!-- Émissions de CO2 par kWh produit en France -->
       <RateCo2 />
-      <MixEnergy />
+
+      <!-- Trade Energie  -->
+      <TradeEnergy />
+
+      <!-- consommation electrique  -->
       <MixEnergy />
     </section>
   </div>
@@ -21,6 +25,7 @@
 <script setup>
 import MixEnergy from '@/components/charts/MixEnergy.vue';
 import RateCo2 from '@/components/charts/RateCo2.vue';
+import TradeEnergy from '@/components/charts/TradeEnergy.vue';
 import SelectPeriod from '@/components/SelectPeriod.vue';
 </script>
 

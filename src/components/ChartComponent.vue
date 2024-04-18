@@ -1,7 +1,7 @@
 <script setup>
 // data to display
 const props = defineProps({
-  chartOptions: Object
+  chartOptions: Object,
 });
 </script>
 

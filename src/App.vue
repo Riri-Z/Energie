@@ -24,7 +24,8 @@
   font-weight: normal;
   display: flex;
   flex-direction: column;
-
+  width: 90vw;
+  align-items: center;
   &-navbar {
     display: flex;
     flex-direction: row;

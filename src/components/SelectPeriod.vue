@@ -43,6 +43,7 @@ const limitDateEnd = ref(eco2MixStore.limitDateEnd);
 
 const updateChart = () => {
   eco2MixStore.getECO2mixRealTimeData();
+  eco2MixStore.getECO2mixTradeEnergy();
 };
 
 const ondateEndChange = (payload) => {
