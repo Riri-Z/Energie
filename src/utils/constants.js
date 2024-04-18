@@ -14,3 +14,11 @@ export const SELECT_FIELDS =
 /* Limite database for now */
 export const LIMIT_END_DATE_DATA = 'April 08, 2024 23:59:59';
 export const LIMIT_START_DATE_DATA = 'June 06, 2022 00:00:0';
+
+/* Pays frontaliers */
+
+export const ech_comm_angleterre = 'Angleterre';
+export const ech_comm_espagne = 'Espagne';
+export const ech_comm_italie = 'Italie';
+export const ech_comm_suisse = 'Suisse';
+export const ech_comm_allemane_belgique = 'Allemagne et Belgique';
