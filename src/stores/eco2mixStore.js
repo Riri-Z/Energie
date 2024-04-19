@@ -123,10 +123,6 @@ export const useEco2mixStore = defineStore('eco2mix', {
               item.bioenergies,
             ]),
           },
-          {
-            name: 'Co2',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.taux_co2]),
-          },
         ];
 
         const chartOptionsEco2Mix = {
@@ -164,6 +160,36 @@ export const useEco2mixStore = defineStore('eco2mix', {
             enabled: false,
           },
         };
+
+        this.updateChartOptionsEco2Mix(chartOptionsEco2Mix);
+        return 'getECO2mixRealTimeData';
+      }
+    },
+    async getCo2Rate(start = this.dateStart, end = this.dateEnd) {
+      // A variabiliser
+      const url = new URL(`http://localhost:3000/eco2mix/co2Rate`);
+      url.search = new URLSearchParams({
+        startDate: formatDateToApi(start),
+        endDate: formatDateToApi(end),
+      });
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      const method = 'GET';
+
+      const response = await fetch(url, {
+        method,
+        headers,
+      });
+      const result = await response.json();
+
+      if (Array.isArray(result.data) && result.data.length > 0) {
+        const values = result.data;
+
+        for (const element of values) {
+          element.timeStamp = Date.parse(element.date_heure);
+        }
 
         /* CO2 chart */
         const xAxisCo2 = {
@@ -217,10 +243,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
 
           series: seriesCo2,
         };
-        this.updateChartOptionsEco2Mix(chartOptionsEco2Mix);
         this.updateChartCo2Emission(chartCo2Emission);
-        return 'getECO2mixRealTimeData';
       }
+      return true;
     },
     async getECO2mixTradeEnergy(start = this.dateStart, end = this.dateEnd) {
       // A variabiliser

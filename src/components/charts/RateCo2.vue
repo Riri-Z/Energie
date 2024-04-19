@@ -3,6 +3,7 @@ import ChartComponent from '@/components/ChartComponent.vue';
 import ErrorComponent from '@/components/ErrorComponent.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 const eco2MixStore = useEco2mixStore();
+eco2MixStore.getCo2Rate();
 </script>
 
 <template>
