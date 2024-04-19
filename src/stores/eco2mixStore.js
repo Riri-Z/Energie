@@ -76,68 +76,50 @@ export const useEco2mixStore = defineStore('eco2mix', {
       if (Array.isArray(result.data) && result.data.length > 0) {
         const values = result.data;
 
+        for (const element of values) {
+          element.timeStamp = Date.parse(element.date_heure);
+        }
         /* Mix energie chart */
         const seriesData = [
           {
             name: 'Fioul',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.fioul,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.fioul]),
           },
           {
             name: 'Charbon',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.charbon,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.charbon]),
           },
           {
             name: 'Gaz',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.gaz,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.gaz]),
           },
           {
             name: 'Nucleaire',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.nucleaire,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.nucleaire]),
           },
           {
             name: 'Eolien',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.eolien,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.eolien]),
           },
           {
             name: 'Solaire',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.solaire,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.solaire]),
           },
           {
             name: 'Hydraulique',
             data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
+              timeStampTotimeStampPlus2(item.timeStamp),
               item.hydraulique,
             ]),
           },
           {
             name: 'Pompage',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
-              item.pompage,
-            ]),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.pompage]),
           },
           {
             name: 'Bioenergies',
             data: values.map((item) => [
-              timeStampTotimeStampPlus2(Date.parse(item.date_heure)),
+              timeStampTotimeStampPlus2(item.timeStamp),
               item.bioenergies,
             ]),
           },
@@ -147,6 +129,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           chart: {
             type: 'area',
           },
+
           title: {
             text: "La production d'électricité par filière",
             align: 'left',
@@ -181,12 +164,12 @@ export const useEco2mixStore = defineStore('eco2mix', {
         /* CO2 chart */
         const xAxisCo2 = {
           categories: values.map((item) => {
-            const date = timeStampTotimeStampPlus2(Date.parse(item.date_heure));
+            const date = item.timeStamp;
 
             return date;
           }),
           accessibility: {
-            description: 'Heure du relevé',
+            description: 'Date/Heure du relevé du taux de Co2',
           },
           labels: {
             format: '{value:%d-%m %H:%M:%S}',
@@ -209,6 +192,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
         const chartCo2Emission = {
           chart: {
             type: 'line',
+          },
+          time: {
+            timezone: 'Europe/Berlin',
           },
           title: {
             text: 'Émissions de CO2 par kWh produit en France',
@@ -235,8 +221,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
     async getECO2mixTradeEnergy(start = this.dateStart, end = this.dateEnd) {
       // A variabiliser
       const url = new URL(`http://localhost:3000/eco2mix/energiesTrade`);
-      url.searchParams.append('startDate', isoStringToUtC2(start.toISOString()));
-      url.searchParams.append('endDate', isoStringToUtC2(end.toISOString()));
+      url.search = new URLSearchParams({
+        startDate: isoStringToUtC2(start.toISOString()),
+        endDate: isoStringToUtC2(end.toISOString())
+      })
       const headers = {
         'Content-Type': 'application/json',
       };
