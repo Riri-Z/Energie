@@ -11,3 +11,7 @@ export function timeStampTotimeStampPlus2(timeStamp) {
 
   return date.getTime();
 }
+
+export function formatDateToApi(date) {
+  return isoStringToUtC2(date.toISOString()).substring(0, 10);
+}

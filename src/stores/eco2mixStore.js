@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { LIMIT_END_DATE_DATA } from '@/utils/constants';
-import { isoStringToUtC2, timeStampTotimeStampPlus2 } from '@/utils/convertDate';
+import { formatDateToApi, timeStampTotimeStampPlus2 } from '@/utils/convertDate';
 import { format } from 'date-fns';
 const todayDate = new Date(LIMIT_END_DATE_DATA);
 
@@ -58,8 +58,8 @@ export const useEco2mixStore = defineStore('eco2mix', {
      */
     async getECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(`http://localhost:3000/eco2mix/totalproduction`); // A variabiliser
-      url.searchParams.append('startDate', isoStringToUtC2(start.toISOString()));
-      url.searchParams.append('endDate', isoStringToUtC2(end.toISOString()));
+      url.searchParams.append('startDate', formatDateToApi(start));
+      url.searchParams.append('endDate', formatDateToApi(end));
 
       const headers = {
         'Content-Type': 'application/json',
@@ -123,6 +123,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
               item.bioenergies,
             ]),
           },
+          {
+            name: 'Co2',
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.taux_co2]),
+          },
         ];
 
         const chartOptionsEco2Mix = {
@@ -172,7 +176,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
             description: 'Date/Heure du relevé du taux de Co2',
           },
           labels: {
-            format: '{value:%d-%m %H:%M:%S}',
+            format: '{value:%d-%m %H:%M}',
           },
           type: 'datetime',
           title: {
@@ -222,9 +226,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
       // A variabiliser
       const url = new URL(`http://localhost:3000/eco2mix/energiesTrade`);
       url.search = new URLSearchParams({
-        startDate: isoStringToUtC2(start.toISOString()),
-        endDate: isoStringToUtC2(end.toISOString())
-      })
+        startDate: formatDateToApi(start),
+        endDate: formatDateToApi(end),
+      });
       const headers = {
         'Content-Type': 'application/json',
       };
