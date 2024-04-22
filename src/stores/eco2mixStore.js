@@ -8,6 +8,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
     limit_end_data: null,
     chartOptionsEco2Mix: null,
+    chartOptionsElectricityConsumption: null,
     chartCo2Emission: null,
     chartCommercialTrade: null,
     limitDateStart: new Date(LIMIT_END_DATE_DATA),
@@ -28,6 +29,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     },
     updateChartOptionsEco2Mix(newValue) {
       this.chartOptionsEco2Mix = newValue;
+    },
+    updateChartOptionsElectricityConsumption(newValue) {
+      this.chartOptionsElectricityConsumption = newValue;
     },
     updateChartCo2Emission(newValue) {
       this.chartCo2Emission = newValue;
@@ -129,7 +133,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
           chart: {
             type: 'area',
           },
-
+          subtitle: {
+            text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+            align: 'left',
+          },
           title: {
             text: "La production d'électricité par filière",
             align: 'left',
@@ -153,7 +160,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           legend: {
             layout: 'horizontal',
             align: 'center',
-            verticalAlign: 'top',
+            verticalAlign: 'bottom',
           },
           series: seriesData,
           accessibility: {
@@ -161,7 +168,74 @@ export const useEco2mixStore = defineStore('eco2mix', {
           },
         };
 
+        const seriesElectricityConsumption = [
+          {
+            name: 'Consommation',
+            data: values.map((item) => [
+              timeStampTotimeStampPlus2(item.timeStamp),
+              item.consommation,
+            ]),
+          },
+          {
+            name: 'Prevision_j1',
+            data: values.map((item) => [
+              timeStampTotimeStampPlus2(item.timeStamp),
+              item.prevision_j1,
+            ]),
+          },
+          {
+            name: 'Prevision_j',
+            data: values.map((item) => [
+              timeStampTotimeStampPlus2(item.timeStamp),
+              item.prevision_j,
+            ]),
+          },
+        ];
+
+        const chartOptionsElectricityConsumption = {
+          title: {
+            text: 'Consommation electrique en France',
+            align: 'left',
+          },
+          subtitle: {
+            text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+            align: 'left',
+          },
+          yAxis: {
+            title: {
+              text: 'Consommation nationale',
+            },
+          },
+
+          xAxis: {
+            type: 'datetime',
+            title: {
+              text: 'Date Heure',
+            },
+          },
+
+          legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+          },
+          tooltip: {
+            shared: true,
+            headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>',
+          },
+          plotOptions: {
+            series: {
+              label: {
+                connectorAllowed: false,
+              },
+              pointStart: 2010,
+            },
+          },
+
+          series: seriesElectricityConsumption,
+        };
         this.updateChartOptionsEco2Mix(chartOptionsEco2Mix);
+        this.updateChartOptionsElectricityConsumption(chartOptionsElectricityConsumption);
         return 'getECO2mixRealTimeData';
       }
     },
@@ -191,46 +265,31 @@ export const useEco2mixStore = defineStore('eco2mix', {
           element.timeStamp = Date.parse(element.date_heure);
         }
 
-        /* CO2 chart */
-        const xAxisCo2 = {
-          categories: values.map((item) => {
-            const date = item.timeStamp;
-
-            return date;
-          }),
-          accessibility: {
-            description: 'Date/Heure du relevé du taux de Co2',
-          },
-          labels: {
-            format: '{value:%d-%m %H:%M}',
-          },
-          type: 'datetime',
-          title: {
-            text: 'Date Heure',
-          },
-        };
-
         const seriesCo2 = [
           {
             name: 'Taux de Co2',
 
-            data: values.map((item) => {
-              return item.taux_co2;
-            }),
+            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.taux_co2]),
           },
         ];
         const chartCo2Emission = {
           chart: {
             type: 'line',
           },
-          time: {
-            timezone: 'Europe/Berlin',
-          },
           title: {
             text: 'Émissions de CO2 par kWh produit en France',
+            align: 'left',
           },
-          xAxis: xAxisCo2,
-
+          subtitle: {
+            text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+            align: 'left',
+          },
+          xAxis: {
+            type: 'datetime',
+            title: {
+              text: 'Date Heure',
+            },
+          },
           yAxis: {
             title: {
               text: 'Taux Co2 eq/kwh',
@@ -337,6 +396,11 @@ export const useEco2mixStore = defineStore('eco2mix', {
           },
           title: {
             text: 'Echanges commerciales avec les pays frontaliers',
+            align: 'left',
+          },
+          subtitle: {
+            text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+            align: 'left',
           },
           xAxis: xAxis,
           credits: {
