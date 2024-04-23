@@ -6,20 +6,27 @@
       vous permettre de visualiser les tendances de consommation, les variations de production et la
       répartition des différentes sources d'énergie dans le pays.
     </p>
-    <SelectPeriod />
-    <section class="eco-mix-view-content-charts-container">
-      <!-- Production d'électricité par filière -->
-      <MixEnergy />
+    <div v-if="isError">Error with api</div>
 
-      <!-- Consommation electrique en France  -->
-      <ElectricityConsumption />
+    <article v-else-if="eco2MixStore.limitDateEnd">
+      <SelectPeriod />
+      <section class="eco-mix-view-content-charts-container">
+        <!-- Production d'électricité par filière -->
+        <MixEnergy />
 
-      <!-- Émissions de CO2 par kWh produit en France -->
-      <RateCo2 />
+        <!-- Consommation electrique en France  -->
+        <ElectricityConsumption />
 
-      <!-- Trade Energie  -->
-      <TradeEnergy />
-    </section>
+        <!-- Émissions de CO2 par kWh produit en France -->
+        <RateCo2 />
+
+        <!-- Trade Energie  -->
+        <TradeEnergy />
+      </section>
+    </article>
+    <div v-else>
+      <p>Chargement en cours...</p>
+    </div>
   </div>
 </template>
 
@@ -29,6 +36,14 @@ import RateCo2 from '@/components/charts/RateCo2.vue';
 import TradeEnergy from '@/components/charts/TradeEnergy.vue';
 import ElectricityConsumption from '@/components/charts/ElectricityConsumption.vue';
 import SelectPeriod from '@/components/SelectPeriod.vue';
+import { useEco2mixStore } from '@/stores/eco2mixStore';
+
+const eco2MixStore = useEco2mixStore();
+eco2MixStore.getLastDateAvailable();
+
+function isError() {
+  return eco2MixStore.error;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -45,11 +60,6 @@ import SelectPeriod from '@/components/SelectPeriod.vue';
     max-width: 100%;
   }
   &-charts-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: 10px;
-
-    justify-content: space-between;
     @media screen and (max-width: $screen-dp) {
       display: flex;
       flex-direction: column;

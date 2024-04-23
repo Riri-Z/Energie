@@ -48,10 +48,10 @@ const updateChart = () => {
 };
 
 const ondateEndChange = (payload) => {
-  return eco2MixStore.selectdateEnd(payload);
+  return eco2MixStore.setSelectdateEnd(payload);
 };
 const ondateStartChange = (payload) => {
-  return eco2MixStore.selectdateStart(payload);
+  return eco2MixStore.setSelectdateStart(payload);
 };
 </script>
 

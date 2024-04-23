@@ -11,8 +11,7 @@ export const DATA_LIMIT = 100;
 export const SELECT_FIELDS =
   'records?select=fioul%2C%20charbon%2Cgaz%2Cnucleaire%2Cdate%2Cconsommation';
 
-/* Limite database for now */
-export const LIMIT_END_DATE_DATA = 'April 08, 2024 23:59:59';
+/* Limite database */
 export const LIMIT_START_DATE_DATA = 'June 06, 2022 00:00:0';
 
 /* Pays frontaliers */

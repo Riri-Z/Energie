@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
-import { LIMIT_END_DATE_DATA } from '@/utils/constants';
 import { formatDateToApi, timeStampTotimeStampPlus2 } from '@/utils/convertDate';
 import { format } from 'date-fns';
-const todayDate = new Date(LIMIT_END_DATE_DATA);
+import { parseISO } from 'date-fns';
 
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
@@ -11,21 +10,28 @@ export const useEco2mixStore = defineStore('eco2mix', {
     chartOptionsElectricityConsumption: null,
     chartCo2Emission: null,
     chartCommercialTrade: null,
-    limitDateStart: new Date(LIMIT_END_DATE_DATA),
-    dateStart: new Date(todayDate.setHours(0, 0, 0, 0)),
-    limitDateEnd: new Date(LIMIT_END_DATE_DATA),
-    dateEnd: new Date(LIMIT_END_DATE_DATA),
+    limitDateStart: null,
+    dateStart: null,
+    limitDateEnd: null,
+    dateEnd: null,
+    error: false,
   }),
   getters: {},
   actions: {
-    selectdateStart(newValue) {
-      this.dateStart = newValue;
+    setSelectdateStart(date) {
+      this.dateStart = date;
     },
-    handleLimitDateEnd(newValue) {
-      this.limitDateEnd = newValue;
+    setLimitDateStart(date) {
+      this.limitDateEnd = date;
     },
-    selectdateEnd(newValue) {
-      this.dateEnd = newValue;
+    setlimit_end_data(date) {
+      this.limit_end_data = date;
+    },
+    setLimitDateEnd(date) {
+      this.limitDateEnd = date;
+    },
+    setSelectdateEnd(date) {
+      this.dateEnd = date;
     },
     updateChartOptionsEco2Mix(newValue) {
       this.chartOptionsEco2Mix = newValue;
@@ -39,22 +45,35 @@ export const useEco2mixStore = defineStore('eco2mix', {
     updateChartCommercialTrade(newValue) {
       this.chartCommercialTrade = newValue;
     },
+    setError(value) {
+      this.error = value;
+    },
     async getLastDateAvailable() {
-      const url = new URL('http://localhost:3000/eco2mix/lastRecord');
-      const headers = {
-        'Content-Type': 'application/json',
-      };
-      const method = 'GET';
+      try {
+        const url = new URL('http://localhost:3000/eco2mix/lastRecord');
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        const method = 'GET';
 
-      const response = await fetch(url, {
-        method,
-        headers,
-      });
-      const result = await response.json();
-      if (result.date != null) {
-        this.limit_end_data = result.date;
+        const response = await fetch(url, {
+          method,
+          headers,
+        });
+        const result = await response.json();
+
+        if (result?.date != null) {
+          const lastDateAvailable = parseISO(result.date);
+          this.setlimit_end_data(lastDateAvailable);
+          this.setSelectdateStart(lastDateAvailable);
+          this.setLimitDateEnd(lastDateAvailable);
+          this.setSelectdateEnd(lastDateAvailable);
+          this.setSelectdateStart(lastDateAvailable);
+        }
+      } catch (error) {
+        this.setError(true);
+        console.log('error', error);
       }
-      return true;
     },
     /**
      * - Compute data  to display ECO2mix_daily
@@ -133,6 +152,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
           chart: {
             type: 'area',
           },
+          loading: {
+            hideDuration: 1000,
+            showDuration: 1000
+          },
           subtitle: {
             text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
             align: 'left',
@@ -196,6 +219,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
           title: {
             text: 'Consommation electrique en France',
             align: 'left',
+          },
+          loading: {
+            hideDuration: 1000,
+            showDuration: 1000
           },
           subtitle: {
             text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',

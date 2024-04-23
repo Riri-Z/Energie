@@ -17,8 +17,6 @@ import ErrorComponent from '@/components/ErrorComponent.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getECO2mixRealTimeData();
-
-eco2MixStore.getLastDateAvailable();
 </script>
 
 <style lang="scss" scoped>
