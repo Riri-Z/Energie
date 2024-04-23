@@ -6,9 +6,9 @@
       vous permettre de visualiser les tendances de consommation, les variations de production et la
       répartition des différentes sources d'énergie dans le pays.
     </p>
-    <div v-if="isError">Error with api</div>
+    <div v-if="eco2MixStore.error">Error with api</div>
 
-    <article v-else-if="eco2MixStore.limitDateEnd">
+    <article v-if="eco2MixStore.limitDateEnd && !eco2MixStore.error">
       <SelectPeriod />
       <section class="eco-mix-view-content-charts-container">
         <!-- Production d'électricité par filière -->
@@ -40,10 +40,6 @@ import { useEco2mixStore } from '@/stores/eco2mixStore';
 
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
-
-function isError() {
-  return eco2MixStore.error;
-}
 </script>
 
 <style lang="scss" scoped>
