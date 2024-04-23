@@ -75,11 +75,161 @@ export const useEco2mixStore = defineStore('eco2mix', {
         console.log('error', error);
       }
     },
+    transformDataForChartEco2mix(values) {
+      for (const element of values) {
+        element.timeStamp = Date.parse(element.date_heure);
+      }
+      /* Mix energie chart */
+      const seriesElictricityProduction = [
+        {
+          name: 'Fioul',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.fioul]),
+        },
+        {
+          name: 'Charbon',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.charbon]),
+        },
+        {
+          name: 'Gaz',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.gaz]),
+        },
+        {
+          name: 'Nucleaire',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.nucleaire]),
+        },
+        {
+          name: 'Eolien',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.eolien]),
+        },
+        {
+          name: 'Solaire',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.solaire]),
+        },
+        {
+          name: 'Hydraulique',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.hydraulique]),
+        },
+        {
+          name: 'Pompage',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.pompage]),
+        },
+        {
+          name: 'Bioenergies',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.bioenergies]),
+        },
+      ];
+
+      const chartOptionsEco2Mix = {
+        chart: {
+          type: 'area',
+        },
+        subtitle: {
+          text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+          align: 'left',
+        },
+        title: {
+          text: "La production d'électricité par filière",
+          align: 'left',
+        },
+        yAxis: {
+          title: {
+            text: ' Mégawattheures (MWh)',
+          },
+        },
+        xAxis: {
+          type: 'datetime',
+          title: {
+            text: 'Date Heure',
+          },
+        },
+        tooltip: {
+          shared: true,
+          headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>',
+        },
+        legend: {
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom',
+        },
+        series: seriesElictricityProduction,
+        accessibility: {
+          enabled: false,
+        },
+      };
+
+      const seriesElectricityConsumption = [
+        {
+          name: 'Consommation',
+          data: values.map((item) => [
+            timeStampTotimeStampPlus2(item.timeStamp),
+            item.consommation,
+          ]),
+        },
+        {
+          name: 'Prevision_j1',
+          data: values.map((item) => [
+            timeStampTotimeStampPlus2(item.timeStamp),
+            item.prevision_j1,
+          ]),
+        },
+        {
+          name: 'Prevision_j',
+          data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.prevision_j]),
+        },
+      ];
+
+      const chartOptionsElectricityConsumption = {
+        title: {
+          text: 'Consommation electrique en France',
+          align: 'left',
+        },
+        loading: {
+          hideDuration: 1000,
+          showDuration: 1000,
+        },
+        subtitle: {
+          text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+          align: 'left',
+        },
+        yAxis: {
+          title: {
+            text: 'Consommation nationale',
+          },
+        },
+        xAxis: {
+          type: 'datetime',
+          title: {
+            text: 'Date Heure',
+          },
+        },
+
+        legend: {
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom',
+        },
+        tooltip: {
+          shared: true,
+          headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>',
+        },
+        plotOptions: {
+          series: {
+            label: {
+              connectorAllowed: false,
+            },
+            pointStart: 2010,
+          },
+        },
+
+        series: seriesElectricityConsumption,
+      };
+      return { chartOptionsEco2Mix, chartOptionsElectricityConsumption };
+    },
     /**
      * - Compute data  to display ECO2mix_daily
      * @returns {Object}
      */
-    async getECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
+    async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(`http://localhost:3000/eco2mix/totalproduction`); // A variabiliser
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
@@ -90,180 +240,36 @@ export const useEco2mixStore = defineStore('eco2mix', {
 
       const method = 'GET';
 
-      const response = await fetch(url, {
-        method,
-        headers,
-      });
-      const result = await response.json();
+      try {
+        const response = await fetch(url, {
+          method,
+          headers,
+        });
 
-      if (Array.isArray(result.data) && result.data.length > 0) {
-        const values = result.data;
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching ECO2mix data:', error);
+        throw new Error('Failed to fetch ECO2mix data');
+      }
+    },
+    async getECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
+      try {
+        const result = await this.fetchECO2mixRealTimeData(start, end);
 
-        for (const element of values) {
-          element.timeStamp = Date.parse(element.date_heure);
+        if (Array.isArray(result.data) && result.data.length > 0) {
+          const data = this.transformDataForChartEco2mix(result.data);
+          const { chartOptionsEco2Mix, chartOptionsElectricityConsumption } = data;
+          this.updateChartOptionsEco2Mix(chartOptionsEco2Mix);
+          this.updateChartOptionsElectricityConsumption(chartOptionsElectricityConsumption);
+
+          return 'Data fetched successfully';
+        } else {
+          this.setError(true);
+          return 'No data available';
         }
-        /* Mix energie chart */
-        const seriesData = [
-          {
-            name: 'Fioul',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.fioul]),
-          },
-          {
-            name: 'Charbon',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.charbon]),
-          },
-          {
-            name: 'Gaz',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.gaz]),
-          },
-          {
-            name: 'Nucleaire',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.nucleaire]),
-          },
-          {
-            name: 'Eolien',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.eolien]),
-          },
-          {
-            name: 'Solaire',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.solaire]),
-          },
-          {
-            name: 'Hydraulique',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(item.timeStamp),
-              item.hydraulique,
-            ]),
-          },
-          {
-            name: 'Pompage',
-            data: values.map((item) => [timeStampTotimeStampPlus2(item.timeStamp), item.pompage]),
-          },
-          {
-            name: 'Bioenergies',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(item.timeStamp),
-              item.bioenergies,
-            ]),
-          },
-        ];
-
-        const chartOptionsEco2Mix = {
-          chart: {
-            type: 'area',
-          },
-          loading: {
-            hideDuration: 1000,
-            showDuration: 1000
-          },
-          subtitle: {
-            text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
-            align: 'left',
-          },
-          title: {
-            text: "La production d'électricité par filière",
-            align: 'left',
-          },
-          yAxis: {
-            title: {
-              useHTML: true,
-              text: 'MW',
-            },
-          },
-          xAxis: {
-            type: 'datetime',
-            title: {
-              text: 'Date Heure',
-            },
-          },
-          tooltip: {
-            shared: true,
-            headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>',
-          },
-          legend: {
-            layout: 'horizontal',
-            align: 'center',
-            verticalAlign: 'bottom',
-          },
-          series: seriesData,
-          accessibility: {
-            enabled: false,
-          },
-        };
-
-        const seriesElectricityConsumption = [
-          {
-            name: 'Consommation',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(item.timeStamp),
-              item.consommation,
-            ]),
-          },
-          {
-            name: 'Prevision_j1',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(item.timeStamp),
-              item.prevision_j1,
-            ]),
-          },
-          {
-            name: 'Prevision_j',
-            data: values.map((item) => [
-              timeStampTotimeStampPlus2(item.timeStamp),
-              item.prevision_j,
-            ]),
-          },
-        ];
-
-        const chartOptionsElectricityConsumption = {
-          title: {
-            text: 'Consommation electrique en France',
-            align: 'left',
-          },
-          loading: {
-            hideDuration: 1000,
-            showDuration: 1000
-          },
-          subtitle: {
-            text: 'Source: <a href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
-            align: 'left',
-          },
-          yAxis: {
-            title: {
-              text: 'Consommation nationale',
-            },
-          },
-
-          xAxis: {
-            type: 'datetime',
-            title: {
-              text: 'Date Heure',
-            },
-          },
-
-          legend: {
-            layout: 'horizontal',
-            align: 'center',
-            verticalAlign: 'bottom',
-          },
-          tooltip: {
-            shared: true,
-            headerFormat: '<span style="font-size:12px"><b>{point.key}</b></span><br>',
-          },
-          plotOptions: {
-            series: {
-              label: {
-                connectorAllowed: false,
-              },
-              pointStart: 2010,
-            },
-          },
-
-          series: seriesElectricityConsumption,
-        };
-        this.updateChartOptionsEco2Mix(chartOptionsEco2Mix);
-        this.updateChartOptionsElectricityConsumption(chartOptionsElectricityConsumption);
-        return 'getECO2mixRealTimeData';
+      } catch (error) {
+        console.error('Error getting ECO2mix real-time data:', error);
+        return 'Error getting ECO2mix real-time data';
       }
     },
     async getCo2Rate(start = this.dateStart, end = this.dateEnd) {
@@ -430,6 +436,11 @@ export const useEco2mixStore = defineStore('eco2mix', {
             align: 'left',
           },
           xAxis: xAxis,
+          yAxis: {
+            title: {
+              text: 'Mégawattheures (MWh)',
+            },
+          },
           credits: {
             enabled: false,
           },

@@ -8,7 +8,7 @@
     </p>
     <div v-if="eco2MixStore.error">Error with api</div>
 
-    <article v-if="eco2MixStore.limitDateEnd && !eco2MixStore.error">
+    <article v-if="eco2MixStore.limitDateEnd">
       <SelectPeriod />
       <section class="eco-mix-view-content-charts-container">
         <!-- Production d'électricité par filière -->
@@ -24,9 +24,6 @@
         <TradeEnergy />
       </section>
     </article>
-    <div v-else>
-      <p>Chargement en cours...</p>
-    </div>
   </div>
 </template>
 
