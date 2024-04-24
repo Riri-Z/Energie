@@ -8,19 +8,19 @@
     </p>
     <div v-if="eco2MixStore.error">Error with api</div>
 
-    <article v-if="eco2MixStore.limitDateEnd">
+    <article v-if="eco2MixStore.limitDateEnd" class="eco-mix-view-content-container">
       <SelectPeriod />
-      <section class="eco-mix-view-content-charts-container">
-        <!-- Production d'électricité par filière -->
+      <section class="eco-mix-view-content-container-charts">
+        <!--      Production d'électricité par filière -->
         <MixEnergy />
 
-        <!-- Consommation electrique en France  -->
+        <!--    Consommation electrique en France -->
         <ElectricityConsumption />
 
-        <!-- Émissions de CO2 par kWh produit en France -->
+        <!--       Émissions de CO2 par kWh produit en France -->
         <RateCo2 />
 
-        <!-- Trade Energie  -->
+        <!-- Trade Energie -->
         <TradeEnergy />
       </section>
     </article>
@@ -41,22 +41,18 @@ eco2MixStore.getLastDateAvailable();
 
 <style lang="scss" scoped>
 .eco-mix-view-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  max-width: 100%;
   &-title {
-    font-size: 1em;
+    font-size: 1.8rem;
   }
   &-description {
-    max-width: 100%;
+    text-align: justify;
   }
-  &-charts-container {
-    @media screen and (max-width: $screen-dp) {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &-charts {
+      max-width: 100%;
     }
   }
 }

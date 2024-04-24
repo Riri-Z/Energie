@@ -1,29 +1,32 @@
 <template>
   <div class="selection-periode">
     <div class="selection-periode-start">
-      <p>Début</p>
-      <Datepicker
-        v-model="dateStart"
-        @update:modelValue="ondateStartChange"
-        :upper-limit="limitDateStart"
-        :lower-limit="new Date(LIMIT_START_DATE_DATA)"
-        inputFormat="dd-MM-yyyy"
-      />
+      <p class="selection-periode-start-description">Début</p>
+      <div class="selection-periode-start-date-container">
+        <Datepicker
+          v-model="dateStart"
+          @update:modelValue="ondateStartChange"
+          :upper-limit="limitDateStart"
+          :lower-limit="new Date(LIMIT_START_DATE_DATA)"
+          inputFormat="dd-MM-yyyy"
+        />
+      </div>
     </div>
     <div class="selection-periode-end">
-      <p>Fin</p>
-      <Datepicker
-        v-model="dateEnd"
-        @update:modelValue="ondateEndChange"
-        :upper-limit="limitDateEnd"
-        :lowerLimit="eco2MixStore.dateStart"
-        inputFormat="dd-MM-yyyy"
-      />
+      <p class="selection-periode-end-description">Fin</p>
+      <div class="selection-periode-end-date-container">
+        <Datepicker
+          v-model="dateEnd"
+          @update:modelValue="ondateEndChange"
+          :upper-limit="limitDateEnd"
+          :lowerLimit="eco2MixStore.dateStart"
+          inputFormat="dd-MM-yyyy"
+        />
+      </div>
     </div>
     <div class="selection-periode-refresh">
       <button class="selection-periode-refresh-btn" @click="updateChart">
-        <img class="selection-periode-refresh-btn-icon" :src="refresh" alt="button-refresh" />
-        <p class="selection-periode-refresh-btn-text">Actualiser</p>
+        <p class="selection-periode-refresh-btn-text">Appliquer</p>
       </button>
     </div>
   </div>
@@ -32,7 +35,6 @@
 <script setup>
 import Datepicker from 'vue3-datepicker';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
-import refresh from '@/assets/icons/refresh.png';
 import { ref } from 'vue';
 import { LIMIT_START_DATE_DATA } from '@/utils/constants';
 const eco2MixStore = useEco2mixStore();
@@ -58,35 +60,47 @@ const ondateStartChange = (payload) => {
 <style scoped lang="scss">
 .selection-periode {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  gap: 15px;
-  max-width: 100%;
-  padding-bottom: 20px;
-  &-refresh {
+  flex-direction: column;
+  align-items: center;
+  &-start {
     display: flex;
     flex-direction: row;
-    width: 100px;
-    height: 40px;
-    align-self: end;
-
-    &-btn {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      background-color: #2ea44f;
-      padding: 6px 16px;
-      border: 1px solid rgba(27, 31, 35, 0.15);
-      border-radius: 6px;
-      font-size: 14px;
-      appearance: none;
-      font-weight: 600;
-      line-height: 20px;
-    }
-
-    @media screen and (max-width: $screen-md) {
+    gap: 10px;
+    &-description {
       width: 50px;
+    }
+    &-date-container {
+      align-self: center;
+    }
+  }
+  &-end {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    &-description {
+      width: 50px;
+    }
+    &-date-container {
+      align-self: center;
+    }
+  }
+  &-refresh {
+    display: flex;
+    justify-content: center;
+    &-btn {
+      display: inline-block;
+      margin: 0 0.3em 0.3em 0;
+      border-radius: 2em;
+      font-weight: 300;
+      color: #ffffff;
+      background-color: #4eb5f1;
+      text-align: center;
+      transition: all 0.2s;
+      border-color: #4eb5f1;
+      width: 140px;
+      &:hover {
+        background-color: #4095c6;
+      }
     }
   }
 }

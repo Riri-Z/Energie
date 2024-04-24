@@ -1,16 +1,7 @@
-<script setup>
-/* import ChartsView from './views/ChartsView.vue';
- */
-</script>
+<script setup></script>
 
 <template>
   <div class="app">
-    <header>
-      <nav class="app-navbar">
-        <router-link to="/">eco2mix</router-link>
-        <router-link to="/frenchMap">FrenchMap</router-link>
-      </nav>
-    </header>
     <section class="app-content">
       <RouterView />
     </section>
@@ -21,23 +12,7 @@
 .app {
   max-height: 100vh;
   line-height: 1.6;
-  font-weight: normal;
-  display: flex;
-  flex-direction: column;
-  width: 90vw;
-  align-items: center;
-  &-navbar {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-  &-content {
-    width: 1080px;
-    display: flex;
-    justify-content: center;
-    @media screen and (max-width: $screen-dp) {
-      max-width: 800px;
-    }
-  }
+  max-width: 100%;
+  padding: 0 3% 0 3%;
 }
 </style>
