@@ -50,7 +50,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
     },
     async getLastDateAvailable() {
       try {
-        const url = new URL('http://localhost:3000/eco2mix/lastRecord');
+        const url = new URL(import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PATH_LAST_RECORD);
         const headers = {
           'Content-Type': 'application/json',
         };
@@ -230,7 +230,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
      * @returns {Object}
      */
     async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
-      const url = new URL(`http://localhost:3000/eco2mix/totalproduction`); // A variabiliser
+      const url = new URL(import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION);
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
 
@@ -273,8 +273,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
       }
     },
     async getCo2Rate(start = this.dateStart, end = this.dateEnd) {
-      // A variabiliser
-      const url = new URL(`http://localhost:3000/eco2mix/co2Rate`);
+      const url = new URL(import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PATH_CO2_RATE);
       url.search = new URLSearchParams({
         startDate: formatDateToApi(start),
         endDate: formatDateToApi(end),
@@ -340,8 +339,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
       return true;
     },
     async getECO2mixTradeEnergy(start = this.dateStart, end = this.dateEnd) {
-      // A variabiliser
-      const url = new URL(`http://localhost:3000/eco2mix/energiesTrade`);
+      const url = new URL(import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PATH_ENERGIES_TRADE);
       url.search = new URLSearchParams({
         startDate: formatDateToApi(start),
         endDate: formatDateToApi(end),
