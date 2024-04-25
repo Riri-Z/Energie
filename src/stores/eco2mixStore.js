@@ -426,7 +426,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
             type: 'column',
           },
           title: {
-            text: 'Echanges commerciales avec les pays frontaliers',
+            text: 'Echanges commerciaux avec les pays frontaliers',
             align: 'left',
           },
           subtitle: {

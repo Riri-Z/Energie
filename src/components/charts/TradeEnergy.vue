@@ -13,7 +13,7 @@ eco2MixStore.getECO2mixTradeEnergy();
       :chartOptions="eco2MixStore.chartCommercialTrade"
     />
 
-    <ErrorComponent v-else mainTitle="Erreur sur les échanges commerciales" />
+    <ErrorComponent v-else mainTitle="Erreur sur les échanges commerciaux" />
   </div>
 </template>
 
