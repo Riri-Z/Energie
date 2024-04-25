@@ -7,7 +7,7 @@ eco2MixStore.getECO2mixTradeEnergy();
 </script>
 
 <template>
-  <div class="chart-co2">
+  <div class="chart-trade-energy-container">
     <ChartComponent
       v-if="eco2MixStore.chartCommercialTrade"
       :chartOptions="eco2MixStore.chartCommercialTrade"
@@ -17,4 +17,11 @@ eco2MixStore.getECO2mixTradeEnergy();
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.chart-trade-energy-container {
+  flex-basis: calc(50% - 20px);
+  padding: 10px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+</style>

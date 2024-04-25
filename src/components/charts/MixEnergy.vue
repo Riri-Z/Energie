@@ -1,13 +1,11 @@
 <template>
   <div class="production-wrapper-container">
-    <section class="production-wrapper-container-chart">
-      <ChartComponent
-        v-if="eco2MixStore.chartOptionsEco2Mix"
-        :chartOptions="eco2MixStore.chartOptionsEco2Mix"
-      />
+    <ChartComponent
+      v-if="eco2MixStore.chartOptionsEco2Mix"
+      :chartOptions="eco2MixStore.chartOptionsEco2Mix"
+    />
 
-      <ErrorComponent v-else mainTitle="Erreur eco2mix" />
-    </section>
+    <ErrorComponent v-else mainTitle="Erreur eco2mix" />
   </div>
 </template>
 
@@ -21,5 +19,9 @@ eco2MixStore.getECO2mixRealTimeData();
 
 <style lang="scss" scoped>
 .production-wrapper-container {
+  flex-basis: calc(50% - 20px);
+  padding: 10px;
+  margin: 5px;
+  box-sizing: border-box;
 }
 </style>

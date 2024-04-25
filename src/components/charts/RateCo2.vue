@@ -7,7 +7,7 @@ eco2MixStore.getCo2Rate();
 </script>
 
 <template>
-  <div class="chart-co2">
+  <div class="chart-co2-container">
     <ChartComponent
       v-if="eco2MixStore.chartCo2Emission"
       :chartOptions="eco2MixStore.chartCo2Emission"
@@ -17,4 +17,11 @@ eco2MixStore.getCo2Rate();
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.chart-co2-container {
+  flex-basis: calc(50% - 20px);
+  padding: 10px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+</style>

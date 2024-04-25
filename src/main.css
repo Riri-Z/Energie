@@ -2,4 +2,5 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  background: linear-gradient(to bottom left, #216e93, #21648a, #1f5881, #172d5b, #191c51);
 }

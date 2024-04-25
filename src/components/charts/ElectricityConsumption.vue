@@ -6,7 +6,7 @@ const eco2MixStore = useEco2mixStore();
 </script>
 
 <template>
-  <div class="chart-co2">
+  <div class="chart-electricty-consumption-container">
     <ChartComponent
       v-if="eco2MixStore.chartOptionsElectricityConsumption"
       :chartOptions="eco2MixStore.chartOptionsElectricityConsumption"
@@ -16,4 +16,11 @@ const eco2MixStore = useEco2mixStore();
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.chart-electricty-consumption-container {
+  flex-basis: calc(50% - 20px);
+  padding: 10px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+</style>

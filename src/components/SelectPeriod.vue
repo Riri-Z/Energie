@@ -60,7 +60,7 @@ const ondateStartChange = (payload) => {
 <style scoped lang="scss">
 .selection-periode {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   &-start {
     display: flex;
