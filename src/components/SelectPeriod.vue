@@ -9,19 +9,20 @@ const dateStart = ref(eco2MixStore.dateStart);
 const dateEnd = ref(eco2MixStore.dateEnd);
 const limitDateStart = ref(eco2MixStore.limitDateStart);
 const limitDateEnd = ref(eco2MixStore.limitDateEnd);
+
+/* TODO :
+ - Add loading spinner after click
+*/
 const updateChart = () => {
   eco2MixStore.getECO2mixRealTimeData();
-  eco2MixStore.getECO2mixTradeEnergy();
-  eco2MixStore.getCo2Rate();
 };
 const ondateEndChange = (payload) => {
   const key = 'dateEnd';
-  return eco2MixStore.setSelectdateEnd(payload, key);
+  return eco2MixStore.setSelectDate(payload, key);
 };
 const ondateStartChange = (payload) => {
-  console.log('payload', payload);
   const key = 'dateStart';
-  return eco2MixStore.setSelectdateStart(payload, key);
+  return eco2MixStore.setSelectDate(payload, key);
 };
 </script>
 
