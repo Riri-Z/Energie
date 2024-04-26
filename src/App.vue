@@ -5,7 +5,10 @@ import NavBar from './components/NavBar.vue';
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
 </script>
-
+<!-- TODO
+- Add responsive
+- Handle error
+-->
 <template>
   <div class="app">
     <section class="app-content">
