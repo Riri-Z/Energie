@@ -69,8 +69,6 @@ const ondateStartChange = (payload) => {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    &-label {
-    }
     &-date-container {
       align-self: center;
     }
@@ -79,28 +77,15 @@ const ondateStartChange = (payload) => {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    &-label {
-    }
     &-date-container {
       align-self: center;
     }
   }
   &-refresh {
-    display: flex;
-    justify-content: center;
     &-btn {
-      display: inline-block;
-      margin: 0 0.3em 0.3em 0;
-      border-radius: 2em;
-      font-weight: 300;
-      color: #ffffff;
-      background-color: #4eb5f1;
-      text-align: center;
-      transition: all 0.2s;
-      border-color: #4eb5f1;
-      width: 140px;
-      &:hover {
-        background-color: #4095c6;
+      &-text {
+        text-align: center;
+        margin: auto;
       }
     }
   }

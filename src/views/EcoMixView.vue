@@ -50,6 +50,7 @@ const eco2MixStore = useEco2mixStore();
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      padding-bottom: 20px;
     }
   }
 }

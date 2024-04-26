@@ -1,6 +1,7 @@
 <script setup>
 import SelectPeriod from '@/components/SelectPeriod.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
+import NavBar from './components/NavBar.vue';
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
 </script>
@@ -8,20 +9,17 @@ eco2MixStore.getLastDateAvailable();
 <template>
   <div class="app">
     <section class="app-content">
-      <div class="navigation">
-        <div class="navigation-logo">LOGO</div>
-        <section class="navigation-link">
-          <nav>Dashboard</nav>
-          <nav>Test</nav>
-          <nav>Test</nav>
-        </section>
-      </div>
+      <NavBar />
       <div class="content">
-        <h1 class="content-title">eco2Mix</h1>
-        <div v-if="eco2MixStore.limitDateEnd" class="content-periode">
-          <SelectPeriod />
-        </div>
-        <RouterView />
+        <header class="content-header">
+          <h1 class="content-title">eco2Mix</h1>
+          <div v-if="eco2MixStore.limitDateEnd" class="content-periode">
+            <SelectPeriod />
+          </div>
+        </header>
+        <section class="content-main">
+          <RouterView />
+        </section>
       </div>
     </section>
   </div>
@@ -40,14 +38,6 @@ eco2MixStore.getLastDateAvailable();
     display: flex;
   }
 }
-.navigation {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  height: 100vh;
-  color: $white;
-  background-color: $darkblue;
-}
 .content {
   display: flex;
   flex-direction: column;
@@ -56,6 +46,9 @@ eco2MixStore.getLastDateAvailable();
   &-periode {
     display: flex;
     justify-content: space-between;
+  }
+  &-main {
+    height: 80%;
   }
 }
 </style>
