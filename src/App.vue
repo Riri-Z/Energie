@@ -42,13 +42,14 @@ eco2MixStore.getLastDateAvailable();
   display: flex;
   flex-direction: column;
   max-width: 100%;
+  margin-top: 20px;
   margin-left: 1rem;
   &-periode {
     display: flex;
     justify-content: space-between;
   }
   &-main {
-    height: 80%;
+    max-height: 70%;
   }
 }
 </style>

@@ -28,6 +28,7 @@ import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
   flex: 0 0 15%;
   max-width: 15%;
   font-size: 1.5rem;
+  min-width: 150px;
   &-logo {
     height: 100px;
     display: flex;
