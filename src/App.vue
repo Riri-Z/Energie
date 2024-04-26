@@ -1,7 +1,6 @@
 <script setup>
 import SelectPeriod from '@/components/SelectPeriod.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
-
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
 </script>
@@ -17,13 +16,11 @@ eco2MixStore.getLastDateAvailable();
           <nav>Test</nav>
         </section>
       </div>
-
       <div class="content">
         <h1 class="content-title">eco2Mix</h1>
         <div v-if="eco2MixStore.limitDateEnd" class="content-periode">
           <SelectPeriod />
         </div>
-
         <RouterView />
       </div>
     </section>
@@ -43,7 +40,6 @@ eco2MixStore.getLastDateAvailable();
     display: flex;
   }
 }
-
 .navigation {
   position: sticky;
   top: 0;
@@ -52,7 +48,6 @@ eco2MixStore.getLastDateAvailable();
   color: $white;
   background-color: $darkblue;
 }
-
 .content {
   display: flex;
   flex-direction: column;
