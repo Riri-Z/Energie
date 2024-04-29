@@ -13,7 +13,17 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .chart-container {
-  flex-basis: calc(50% - 10px);
-  box-sizing: border-box;
+  margin: 0.5rem;
+}
+@media only screen and (max-width: $screen-sm) {
+  .chart-container {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: $screen-dp) {
+  .chart-container {
+    width: 100%;
+  }
 }
 </style>

@@ -6,25 +6,22 @@ const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
 </script>
 <!-- TODO
-- Add responsive
-- Handle error
+- Add BURGER MENU
 -->
 <template>
   <div class="app">
-    <section class="app-content">
-      <NavBar />
-      <div class="content">
-        <header class="content-header">
-          <h1 class="content-title">eco2Mix</h1>
-          <div v-if="eco2MixStore.limitDateEnd" class="content-periode">
-            <SelectPeriod />
-          </div>
-        </header>
-        <section class="content-main">
-          <RouterView />
-        </section>
-      </div>
-    </section>
+    <NavBar />
+    <div class="app-content">
+      <header class="app-content-header">
+        <h1 class="app-content-title">Données éCO2mix nationales</h1>
+        <div v-if="eco2MixStore.limitDateEnd" class="app-content-periode">
+          <SelectPeriod />
+        </div>
+      </header>
+      <section class="app-content-main">
+        <RouterView />
+      </section>
+    </div>
   </div>
 </template>
 
@@ -37,22 +34,27 @@ eco2MixStore.getLastDateAvailable();
   width: 100%;
   margin: 0 auto;
   color: $white;
+  display: flex;
   &-content {
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    &-periode {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
-.content {
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  margin-top: 20px;
-  margin-left: 1rem;
-  &-periode {
-    display: flex;
-    justify-content: space-between;
-  }
-  &-main {
-    max-height: 70%;
+
+@media only screen and (max-width: $screen-md) {
+  .app {
+    &-content {
+      margin-left: 0;
+      align-items: center;
+      width: 100%;
+    }
   }
 }
 </style>

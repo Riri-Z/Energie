@@ -1,5 +1,6 @@
 <script setup>
 import Datepicker from 'vue3-datepicker';
+import { fr } from 'date-fns/locale';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 import { ref } from 'vue';
 import { LIMIT_START_DATE_DATA } from '@/utils/constants';
@@ -11,7 +12,7 @@ const limitDateStart = ref(eco2MixStore.limitDateStart);
 const limitDateEnd = ref(eco2MixStore.limitDateEnd);
 
 /* TODO :
- - Add loading spinner after click
+ - Add loading after click on button
 */
 const updateChart = () => {
   eco2MixStore.getECO2mixRealTimeData();
@@ -34,6 +35,7 @@ const ondateStartChange = (payload) => {
         <Datepicker
           v-model="dateStart"
           @update:modelValue="ondateStartChange"
+          :locale="fr"
           :upper-limit="limitDateStart"
           :lower-limit="new Date(LIMIT_START_DATE_DATA)"
           inputFormat="dd-MM-yyyy"
@@ -46,6 +48,7 @@ const ondateStartChange = (payload) => {
         <Datepicker
           v-model="dateEnd"
           @update:modelValue="ondateEndChange"
+          :locale="fr"
           :upper-limit="limitDateEnd"
           :lowerLimit="eco2MixStore.dateStart"
           inputFormat="dd-MM-yyyy"

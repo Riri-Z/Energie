@@ -52,7 +52,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
         }
       } catch (error) {
         this.setError(true);
-        console.log('error', error);
+        console.error(error);
       }
     },
 
@@ -126,8 +126,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
         },
         tooltip: {
           xDateFormat: '%d-%m-%y-%H:%M',
-          followPointer: true,
-
+          followPointer: false,
           split: true,
         },
         legend: {
@@ -184,7 +183,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
         },
         yAxis: {
           title: {
-            text: 'Consommation nationale',
+            text: 'Consommation nationale (MWh)',
           },
         },
 
@@ -268,7 +267,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
       const categories = values.map((item) => {
         return format(Date.parse(item.date_heure), 'dd-MM');
       });
-      console.log('categories', categories);
+
       const xAxis = {
         categories: [...new Set(categories)],
         accessibility: {

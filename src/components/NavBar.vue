@@ -4,12 +4,16 @@ import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
 
 <template>
   <div class="nav-bar">
-    <section class="nav-bar-link">
-      <router-link :to="'/'">
-        <img class="nav-bar-link-icon" :src="dashboardIcon" alt="my-logo" />
-
-        Dashboard</router-link
-      >
+    <h1 class="nav-bar-logo">eco2Mix</h1>
+    <section class="nav-bar-element">
+      <router-link class="nav-bar-element-link" :to="'/'">
+        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
+        <p class="nav-bar-element-link-label">Dashboard</p>
+      </router-link>
+      <router-link class="nav-bar-element-link" :to="'/test'">
+        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
+        <p class="nav-bar-element-link-label">test</p>
+      </router-link>
     </section>
   </div>
 </template>
@@ -22,40 +26,52 @@ import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
   height: 100vh;
   color: $white;
   background-color: $darkblue;
-  font-size: 1.25rem;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 25%;
-  flex: 0 0 15%;
+  font-size: 1.1rem;
   max-width: 15%;
-  font-size: 1.5rem;
   min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &-logo {
-    height: 100px;
+    height: 5rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
-  &-link {
+  &-element {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    &-icon {
-      height: 1.5rem;
-      align-items: center;
-    }
-    & a {
+    align-items: flex-start;
+    margin-left: 1.5rem;
+
+    &-link {
       color: $white;
       text-decoration: none;
       align-items: center;
       display: flex;
+      width: 7.6rem;
 
-      justify-content: space-between;
-      width: 140px;
+      border-right-color: $darkblue;
+      border-right-width: 0.2em;
+      border-right-style: solid;
       &:hover {
         text-decoration: underline;
       }
+      &-icon {
+        height: 1.2rem;
+        padding-right: 1rem;
+      }
     }
+  }
+}
+
+.router-link-active {
+  border-right-color: $green;
+}
+
+@media only screen and (max-width: $screen-md) {
+  .nav-bar {
+    display: none;
   }
 }
 </style>

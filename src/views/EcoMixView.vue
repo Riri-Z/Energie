@@ -1,7 +1,8 @@
 <template>
   <div class="eco-mix-view-content">
-    <h1 class="eco-mix-view-content-title">Données éCO2mix nationales temps réel</h1>
-    <div v-if="eco2MixStore.error">Error with api</div>
+    <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
+      Oops, something went wrong ...
+    </div>
 
     <section v-if="eco2MixStore.limitDateEnd" class="eco-mix-view-content-container-charts">
       <!--      Production d'électricité par filière-->
@@ -45,12 +46,36 @@ const eco2MixStore = useEco2mixStore();
   &-description {
     text-align: justify;
   }
+  &-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+  }
   &-container {
     &-charts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 90%;
+      max-height: 90%;
+    }
+  }
+}
+@media only screen and (max-width: $screen-md) {
+  .eco-mix-view-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-container {
+      &-charts {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: unset;
+        width: 90vw;
+      }
     }
   }
 }

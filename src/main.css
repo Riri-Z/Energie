@@ -5,7 +5,8 @@ body {
   background: linear-gradient(to bottom left, #216e93, #21648a, #1f5881, #172d5b, #191c51);
 }
 input {
-  width: 69px;
+  width: 70px;
+  border-radius: 5px;
 }
 /* Reset default chrome behavior */
 h1,
