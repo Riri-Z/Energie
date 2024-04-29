@@ -59,6 +59,7 @@ const eco2MixStore = useEco2mixStore();
       grid-template-columns: 1fr 1fr;
       max-width: 90%;
       max-height: 90%;
+      gap: 5px;
     }
   }
 }
