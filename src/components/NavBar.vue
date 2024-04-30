@@ -1,18 +1,23 @@
 <script setup>
 import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
+import router from '@/router';
+
+const reload = () => {
+  router.push({ path: '/' });
+};
 </script>
 
 <template>
   <div class="nav-bar">
-    <h1 class="nav-bar-logo">eco2Mix</h1>
+    <h1 class="nav-bar-logo" @click="reload">eco2Mix</h1>
     <section class="nav-bar-element">
       <router-link class="nav-bar-element-link" :to="'/'">
         <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
         <p class="nav-bar-element-link-label">Dashboard</p>
       </router-link>
-      <router-link class="nav-bar-element-link" :to="'/test'">
+      <router-link class="nav-bar-element-link" :to="'/national-map'">
         <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
-        <p class="nav-bar-element-link-label">test</p>
+        <p class="nav-bar-element-link-label">FrenchMap</p>
       </router-link>
     </section>
   </div>
@@ -37,6 +42,7 @@ import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    cursor: pointer;
   }
   &-element {
     display: flex;

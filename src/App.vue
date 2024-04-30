@@ -1,9 +1,13 @@
 <script setup>
 import SelectPeriod from '@/components/SelectPeriod.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
+import { useConsumptionStore } from '@/stores/consumptionStore';
+
 import NavBar from './components/NavBar.vue';
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
+const consumptionStore = useConsumptionStore();
+consumptionStore.getLastDateAvailable();
 </script>
 <!-- TODO
 - Add BURGER MENU
@@ -14,7 +18,10 @@ eco2MixStore.getLastDateAvailable();
     <div class="app-content">
       <header class="app-content-header">
         <h1 class="app-content-title">Données éCO2mix nationales</h1>
-        <div v-if="eco2MixStore.limitDateEnd" class="app-content-periode">
+        <div
+          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected"
+          class="app-content-periode"
+        >
           <SelectPeriod />
         </div>
       </header>
