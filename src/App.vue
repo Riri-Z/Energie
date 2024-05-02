@@ -61,6 +61,9 @@ consumptionStore.getLastDateAvailable();
       margin-left: 0;
       align-items: center;
       width: 100%;
+      &-periode {
+        justify-content: center;
+      }
     }
   }
 }

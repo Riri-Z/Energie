@@ -77,7 +77,7 @@ const onDateConsumptionChange = (payload) => {
       </button>
     </div>
   </div>
-  <div>
+  <div v-if="!isEco2MixTab">
     <div class="selection-periode-start">
       <p class="selection-periode-start-label">Date</p>
       <div class="selection-periode-start-date-container">

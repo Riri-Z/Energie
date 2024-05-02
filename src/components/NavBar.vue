@@ -12,7 +12,7 @@ const reload = () => {
     <h1 class="nav-bar-logo" @click="reload">eco2Mix</h1>
     <section class="nav-bar-element">
       <router-link class="nav-bar-element-link" :to="'/'">
-        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
+        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="dashboard-logo" />
         <p class="nav-bar-element-link-label">Dashboard</p>
       </router-link>
       <router-link class="nav-bar-element-link" :to="'/national-map'">

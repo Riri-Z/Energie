@@ -30,9 +30,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-          '/' +
-          import.meta.env.VITE_API_PATH_LAST_RECORD,
+            import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+            '/' +
+            import.meta.env.VITE_API_PATH_LAST_RECORD,
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -385,9 +385,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(
         import.meta.env.VITE_API_URL +
-        import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-        '/' +
-        import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION,
+          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+          '/' +
+          import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION,
       );
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
