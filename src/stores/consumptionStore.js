@@ -26,9 +26,9 @@ export const useConsumptionStore = defineStore('consumption', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-            import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
-            '/' +
-            import.meta.env.VITE_API_PATH_LAST_RECORD,
+          import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
+          '/' +
+          import.meta.env.VITE_API_PATH_LAST_RECORD,
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -74,6 +74,9 @@ export const useConsumptionStore = defineStore('consumption', {
         },
         colorAxis: {
           min: 0,
+        },
+        accessibility: {
+          enabled: false
         },
         legend: {
           enabled: false,

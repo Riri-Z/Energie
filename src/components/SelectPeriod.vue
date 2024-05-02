@@ -39,7 +39,8 @@ const ondateStartChange = (payload) => {
 };
 const onDateConsumptionChange = (payload) => {
   const key = 'dateSelected';
-  return consumptionStore.setSelectDate(payload, key);
+  consumptionStore.setSelectDate(payload, key);
+  return consumptionStore.getConsumptions(payload);
 };
 </script>
 
