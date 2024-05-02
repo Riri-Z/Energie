@@ -26,9 +26,9 @@ export const useConsumptionStore = defineStore('consumption', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-          import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
-          '/' +
-          import.meta.env.VITE_API_PATH_LAST_RECORD,
+            import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
+            '/' +
+            import.meta.env.VITE_API_PATH_LAST_RECORD,
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -55,33 +55,35 @@ export const useConsumptionStore = defineStore('consumption', {
     },
     computeMapOptions(data) {
       const mappedData = data.map((entry) => {
-        return [entry.regionCodeISO3166, entry.consommation_brute_electricite_totale];
+        return {
+          'hc-key': entry.regionCodeISO3166,
+          electricity: entry.consommation_brute_electricite_totale,
+          gas: entry.consommation_brute_gaz_totale,
+        };
       });
       const chartOption = {
         chart: {
           map: frenchMap,
         },
         title: {
-          text: 'Consommation electrique et gaz journalieres en France',
+          text: "Consommation brute de gaz et d'électricité en France",
         },
-        subtitle: {
-          text: 'Source map: <a href="http://code.highcharts.com/mapdata/custom/world.js">World, Miller projection, medium resolution</a>',
-        },
+
         mapNavigation: {
           enabled: true,
-          buttonOptions: {
-            alignTo: 'spacingBox',
-          },
         },
         colorAxis: {
           min: 0,
         },
+        legend: {
+          enabled: false,
+        },
         series: [
           {
-            name: 'Consommation',
+            name: 'Consommation brute régionale',
             states: {
               hover: {
-                color: '#BADA55',
+                color: '#58e1c1',
               },
             },
             dataLabels: {
@@ -89,29 +91,24 @@ export const useConsumptionStore = defineStore('consumption', {
               format: '{point.name}',
             },
             allAreas: false,
-
             tooltip: {
-              formatter: function () {
-                let tooltip = '<b>' + this.point.name + '</b><br/>';
-                tooltip +=
-                  'Consommation brute gaz grtgaz: ' +
-                  this.point.options.consommation_brute_gaz_grtgaz +
-                  ' MW<br/>';
-                tooltip +=
-                  'Consommation brute gaz terega: ' +
-                  this.point.options.consommation_brute_gaz_terega +
-                  ' MW<br/>';
-                tooltip +=
-                  'Consommation brute gaz totale: ' +
-                  this.point.options.consommation_brute_gaz_totale +
-                  ' MW<br/>';
-                tooltip +=
-                  'Consommation brute électricité totale: ' +
-                  this.point.options.consommation_brute_electricite_totale +
-                  ' MW';
-                return tooltip;
+              backgroundColor: null,
+              borderWidth: 0,
+              shadow: false,
+              useHTML: true,
+              pointFormatter: function () {
+                return (
+                  '<span>' +
+                  this.name +
+                  '</span><br/>' +
+                  'Électricité : <b>' +
+                  this.electricity +
+                  '</b> MW<br/>' +
+                  'Gaz : <b>' +
+                  this.gas +
+                  '</b> MW (PCS 0°C)'
+                );
               },
-              shared: true,
             },
 
             data: mappedData,

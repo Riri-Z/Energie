@@ -1,9 +1,5 @@
-<!--The page provides an overview of mix-energie consumption on the map of France. -->
-
 <script setup>
-import frenchMap from '@highcharts/map-collection/countries/fr/fr-all.topo.json';
 import { useConsumptionStore } from '@/stores/consumptionStore.js';
-import ChartComponent from '@/components/ChartComponent.vue';
 
 const consumptionStore = useConsumptionStore();
 </script>
