@@ -4,7 +4,7 @@
       Oops, something went wrong ...
     </div>
 
-    <section v-if="eco2MixStore.limitDateEnd" class="eco-mix-view-content-container-charts">
+    <main v-if="eco2MixStore.limitDateEnd" class="eco-mix-view-content-container-charts">
       <!--      Production d'électricité par filière-->
       <ChartComponent
         v-if="eco2MixStore.chartOptionsEco2Mix"
@@ -32,7 +32,7 @@
         :chartOptions="eco2MixStore.chartCommercialTrade"
         constructorType="chart"
       />
-    </section>
+    </main>
   </div>
 </template>
 
