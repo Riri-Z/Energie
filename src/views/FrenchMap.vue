@@ -1,6 +1,6 @@
 <script setup>
 import { useConsumptionStore } from '@/stores/consumptionStore.js';
-
+import ChartComponent from '@/components/ChartComponent.vue';
 const consumptionStore = useConsumptionStore();
 </script>
 
@@ -14,14 +14,11 @@ const consumptionStore = useConsumptionStore();
       Ce jeu de données présente les courbes de consommation régionale d’électricité et de gaz
       journalieres en MW.
     </p>
-    <div v-if="consumptionStore.frenchMapOptions">
-      <highcharts
-        :constructorType="`mapChart`"
-        class="hc"
-        :options="consumptionStore.frenchMapOptions"
-        ref="chart"
-      ></highcharts>
-    </div>
+    <ChartComponent
+      v-if="consumptionStore.frenchMapOptions"
+      :chartOptions="consumptionStore.frenchMapOptions"
+      constructorType="mapChart"
+    />
   </div>
 </template>
 

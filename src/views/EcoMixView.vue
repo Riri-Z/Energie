@@ -9,24 +9,28 @@
       <ChartComponent
         v-if="eco2MixStore.chartOptionsEco2Mix"
         :chartOptions="eco2MixStore.chartOptionsEco2Mix"
+        constructorType="chart"
       />
 
       <!--Consommation electrique en France-->
       <ChartComponent
         v-if="eco2MixStore.chartOptionsElectricityConsumption"
         :chartOptions="eco2MixStore.chartOptionsElectricityConsumption"
+        constructorType="chart"
       />
 
       <!--Émissions de CO2 par kWh produit en France-->
       <ChartComponent
         v-if="eco2MixStore.chartCo2Emission"
         :chartOptions="eco2MixStore.chartCo2Emission"
+        constructorType="chart"
       />
 
       <!-- Trade Energie -->
       <ChartComponent
         v-if="eco2MixStore.chartCommercialTrade"
         :chartOptions="eco2MixStore.chartCommercialTrade"
+        constructorType="chart"
       />
     </section>
   </div>
