@@ -138,9 +138,6 @@ export const useEco2mixStore = defineStore('eco2mix', {
           verticalAlign: 'bottom',
         },
         series: seriesElictricityProduction,
-        accessibility: {
-          enabled: false,
-        },
         credits: {
           enabled: false,
         },
