@@ -57,6 +57,7 @@ consumptionStore.getLastDateAvailable();
 
 @media only screen and (max-width: $screen-md) {
   .app {
+    flex-direction: column;
     &-content {
       margin-left: 0;
       align-items: center;
