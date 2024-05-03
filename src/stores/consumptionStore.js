@@ -63,12 +63,25 @@ export const useConsumptionStore = defineStore('consumption', {
       });
       const chartOption = {
         chart: {
+          renderTo: 'chart-wrapper',
           map: frenchMap,
+          backgroundColor: null,
+          height: 600,
+          aspectRatio: 16 / 9, // Ratio 16:9
         },
         title: {
-          text: "Consommation brute de gaz et d'électricité en France",
+          text: "Consommation quotidienne brute régionale (jusqu'en 2024-02-29)",
+          style: {
+            color: '#FFFFFF',
+          },
         },
+        subtitle: {
+          text: 'Ce jeu de données présente la consommation régionale d’électricité (en MW) et de gaz (en MW PCS 0°C).',
 
+          style: {
+            color: '#FFFFFF',
+          },
+        },
         mapNavigation: {
           enabled: true,
         },
@@ -76,6 +89,9 @@ export const useConsumptionStore = defineStore('consumption', {
           min: 0,
         },
         legend: {
+          enabled: false,
+        },
+        credits: {
           enabled: false,
         },
         series: [
