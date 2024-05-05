@@ -39,14 +39,13 @@ const reload = () => {
   top: 0;
   z-index: 1000;
   height: 100vh;
-  color: $white;
-  background-color: $darkblue;
+  color: #f6f4ec;
+  background-color: #181745;
   font-size: 1.1rem;
-  max-width: 15%;
-  min-width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 0 30vh;
   &-logo {
     height: 5rem;
     display: flex;
@@ -60,23 +59,22 @@ const reload = () => {
   &-element {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-
     text-transform: uppercase;
     font-size: 0.8rem;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
 
     &-link {
       color: $white;
       text-decoration: none;
       align-items: center;
       display: flex;
-      width: 9.1rem;
-      padding-left: 6px;
-
+      padding-left: 16%;
       border-right-color: $darkblue;
-
       flex-direction: row;
       justify-content: left;
+      min-width: 83%;
       &:hover {
         text-decoration: underline;
       }
