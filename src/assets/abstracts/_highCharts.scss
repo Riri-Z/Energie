@@ -1,29 +1,10 @@
-/*
-.highcharts-title {
-  fill: #434348;
-  font-weight: bold;
-  text-align: center;
-}
-
-.highcharts-subtitle {
-  font-family: 'Courier New', monospace;
-  font-style: italic;
-  fill: #7cb5ec;
-}
-
-.highcharts-caption {
-  font-family: 'Courier New', monospace;
-  font-style: italic;
-  fill: green;
-}
- */
 .highcharts {
   &-link {
-    fill: #ffff;
+    fill: $fullwhite;
   }
 
   &-title {
-    fill: #434348;
+    fill: $almost-black;
     font-weight: bold;
     text-align: center;
   }
@@ -31,11 +12,11 @@
   &-subtitle {
     font-family: 'Courier New', monospace;
     font-style: italic;
-    fill: #7cb5ec;
+    fill: $blue;
   }
   &-caption {
     font-family: 'Courier New', monospace;
     font-style: italic;
-    fill: green;
+    fill: turquoise;
   }
 }
