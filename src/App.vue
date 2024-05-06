@@ -83,4 +83,19 @@ consumptionStore.getLastDateAvailable();
     }
   }
 }
+
+@media only screen and (max-width: $screen-xs) {
+  .app {
+    &-content {
+      &-header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        &-title {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
 </style>
