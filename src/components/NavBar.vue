@@ -39,7 +39,7 @@ const reload = () => {
   top: 0;
   z-index: 1000;
   height: 100vh;
-  color: #f6f4ec;
+  color: $white;
   background-color: #181745;
   font-size: 1.1rem;
   display: flex;
@@ -87,7 +87,7 @@ const reload = () => {
 }
 
 .router-link-active {
-  border-right-color: $green;
+  border-right-color: $turquoise;
   border-right-width: 0.2em;
   border-right-style: solid;
 }
@@ -98,13 +98,16 @@ const reload = () => {
     min-width: 100%;
     flex-wrap: wrap;
     background-color: $blue;
+    flex: unset;
+    height: unset;
     &-logo {
       flex: 1;
+      height: unset;
     }
     &-burger {
       margin: 1rem;
-      height: 50px;
-      width: 50px;
+      height: 30px;
+      width: 30px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -112,7 +115,6 @@ const reload = () => {
       fill: $white;
       cursor: pointer;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
 
       &:hover {
         transform: scale(1.2);
@@ -125,6 +127,8 @@ const reload = () => {
       &-link {
         border: unset;
         width: unset;
+        min-width: unset;
+        padding-left: 0;
         &-icon {
           display: none;
         }
