@@ -99,6 +99,8 @@ const onDateConsumptionChange = (payload) => {
   gap: 10px;
   font-family: Quicksand;
   font-style: italic;
+  font-size: 1.2rem;
+
   &-start {
     display: flex;
     flex-direction: row;
@@ -106,6 +108,7 @@ const onDateConsumptionChange = (payload) => {
     &-label {
       font-family: Quicksand;
       font-style: italic;
+      font-size: 1.2rem;
     }
     &-date-container {
       align-self: center;
