@@ -3,23 +3,23 @@
     <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
       Oops, something went wrong ...
     </div>
-
-    <main v-if="eco2MixStore.limitDateEnd" class="eco-mix-view-content-container-charts">
-      <!--      Production d'électricité par filière-->
+    <LoadingComponent v-if="eco2MixStore.getIsAllChartsLoaded" />
+    <main v-else class="eco-mix-view-content-container-charts">
+      <!--Production d'électricité par filière-->
       <ChartComponent
         v-if="eco2MixStore.chartOptionsEco2Mix"
         :chartOptions="eco2MixStore.chartOptionsEco2Mix"
         constructorType="chart"
       />
 
-      <!--Consommation electrique en France-->
+      <!--Consommation electrique en France -->
       <ChartComponent
         v-if="eco2MixStore.chartOptionsElectricityConsumption"
         :chartOptions="eco2MixStore.chartOptionsElectricityConsumption"
         constructorType="chart"
       />
 
-      <!--Émissions de CO2 par kWh produit en France-->
+      <!--Émissions de CO2 par kWh produit en France -->
       <ChartComponent
         v-if="eco2MixStore.chartCo2Emission"
         :chartOptions="eco2MixStore.chartCo2Emission"
@@ -38,6 +38,7 @@
 
 <script setup>
 import ChartComponent from '@/components/ChartComponent.vue';
+import LoadingComponent from '@/components/LoadingComponent.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 const eco2MixStore = useEco2mixStore();
 </script>

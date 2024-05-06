@@ -6,19 +6,38 @@ import { parseISO } from 'date-fns';
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
     chartOptionsEco2Mix: null,
+    chartOptionsEco2MixLoading: false,
     chartOptionsElectricityConsumption: null,
+    chartOptionsElectricityConsumptionLoading: false,
     chartCo2Emission: null,
+    chartCo2EmissionLoading: false,
     chartCommercialTrade: null,
+    chartCommercialTradeLoading: false,
     limitDateStart: null,
     dateStart: null,
     limitDateEnd: null,
     dateEnd: null,
     error: false,
   }),
-  getters: {},
+  getters: {
+    getIsAllChartsLoaded() {
+      return (
+        this.limitDateEnd &&
+        this.chartOptionsEco2MixLoading &&
+        this.chartCommercialTradeLoading &&
+        this.chartCo2EmissionLoading &&
+        this.chartOptionsElectricityConsumptionLoading
+      );
+    },
+  },
   actions: {
+    setChartLoading(value, key) {
+      key = key + 'Loading';
+      this[key] = value;
+    },
     setChartOption(value, key) {
       this[key] = value;
+      this.setChartLoading(false, key);
     },
     setSelectDate(value, key) {
       this[key] = value;
@@ -30,9 +49,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-            import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-            '/' +
-            import.meta.env.VITE_API_PATH_LAST_RECORD,
+          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+          '/' +
+          import.meta.env.VITE_API_PATH_LAST_RECORD,
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -170,7 +189,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           borderRadius: 20,
         },
         title: {
-          text: 'Consommation electrique en France',
+          text: 'Consommation électrique en France',
           align: 'center',
         },
         loading: {
@@ -382,9 +401,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(
         import.meta.env.VITE_API_URL +
-          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-          '/' +
-          import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION,
+        import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+        '/' +
+        import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION,
       );
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
@@ -408,6 +427,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
       }
     },
     async getECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
+      this.setChartLoading(true, 'chartOptionsEco2Mix');
+      this.setChartLoading(true, 'chartOptionsElectricityConsumption');
+      this.setChartLoading(true, 'chartCo2Emission');
+      this.setChartLoading(true, 'chartCommercialTrade');
       try {
         const result = await this.fetchECO2mixRealTimeData(start, end);
 
