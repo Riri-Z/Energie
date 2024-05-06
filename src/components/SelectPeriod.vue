@@ -12,7 +12,6 @@ const route = useRoute();
 const isEco2MixTab = computed(() => route.name === 'Eco2Mix');
 
 /* eco2MixStore */
-
 const eco2MixStore = useEco2mixStore();
 const dateStart = ref(eco2MixStore.dateStart);
 const dateEnd = ref(eco2MixStore.dateEnd);
@@ -23,9 +22,6 @@ const limitDateEnd = ref(eco2MixStore.limitDateEnd);
 const consumptionStore = useConsumptionStore();
 const dateSelected = ref(consumptionStore.dateSelected);
 
-/* TODO :
- - Add loading after click on button
-*/
 const updateChart = () => {
   eco2MixStore.getECO2mixRealTimeData();
 };
@@ -101,14 +97,19 @@ const onDateConsumptionChange = (payload) => {
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  font-family: Quicksand;
   &-start {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    &-label {
+      font-family: Quicksand;
+    }
     &-date-container {
       align-self: center;
     }
   }
+
   &-end {
     display: flex;
     flex-direction: row;
@@ -117,11 +118,14 @@ const onDateConsumptionChange = (payload) => {
       align-self: center;
     }
   }
+
   &-refresh {
     &-btn {
+      border-radius: 5px;
       &-text {
         text-align: center;
         margin: auto;
+        font-family: Quicksand-bold;
       }
     }
   }

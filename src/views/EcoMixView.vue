@@ -48,9 +48,11 @@ const eco2MixStore = useEco2mixStore();
   &-title {
     font-size: 1.8rem;
   }
+
   &-description {
     text-align: justify;
   }
+
   &-error {
     position: absolute;
     top: 50%;
@@ -58,6 +60,7 @@ const eco2MixStore = useEco2mixStore();
     transform: translate(-50%, -50%);
     font-size: 3rem;
   }
+
   &-container {
     &-charts {
       display: grid;
@@ -73,6 +76,7 @@ const eco2MixStore = useEco2mixStore();
     display: flex;
     flex-direction: column;
     align-items: center;
+
     &-container {
       &-charts {
         display: flex;

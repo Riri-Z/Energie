@@ -17,10 +17,10 @@ consumptionStore.getLastDateAvailable();
     <NavBar />
     <div class="app-content">
       <header class="app-content-header">
-        <h1 class="app-content-title">Données éCO2mix nationales</h1>
+        <h1 class="app-content-header-title">Données éCO2mix nationales</h1>
         <div
           v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected"
-          class="app-content-periode"
+          class="app-content-header-periode"
         >
           <SelectPeriod />
         </div>
@@ -42,15 +42,22 @@ consumptionStore.getLastDateAvailable();
   margin: 0 auto;
   color: $white;
   display: flex;
+
   &-content {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin-top: 1rem;
     margin-left: 1rem;
-    &-periode {
-      display: flex;
-      justify-content: space-between;
+
+    &-header {
+      &-periode {
+        display: flex;
+        justify-content: space-between;
+      }
+      &-title {
+        font-family: Quicksand-Semi-Bold;
+      }
     }
   }
 }
@@ -58,12 +65,20 @@ consumptionStore.getLastDateAvailable();
 @media only screen and (max-width: $screen-md) {
   .app {
     flex-direction: column;
+
     &-content {
       margin-left: 0;
       align-items: center;
       width: 100%;
-      &-periode {
-        justify-content: center;
+
+      &-header {
+        &-periode {
+          justify-content: center;
+        }
+
+        &-title {
+          font-size: 1.4rem;
+        }
       }
     }
   }

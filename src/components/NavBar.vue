@@ -1,5 +1,6 @@
 <script setup>
 import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
+import electricalIcon from '@/assets/icons/electricalIcon.svg';
 import router from '@/router';
 import burgerMenuIcon from '@/assets/icons/burgerMenuIcon.svg';
 
@@ -26,7 +27,7 @@ const reload = () => {
         <p class="nav-bar-element-link-label">Dashboard</p>
       </router-link>
       <router-link class="nav-bar-element-link" :to="'/national-map'">
-        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
+        <img class="nav-bar-element-link-icon" :src="electricalIcon" alt="electricalIcon-logo" />
         <p class="nav-bar-element-link-label">Consommation</p>
       </router-link>
     </section>
@@ -46,6 +47,7 @@ const reload = () => {
   flex-direction: column;
   align-items: center;
   flex: 1 0 30vh;
+  font-family: Quicksand-bold;
   &-logo {
     height: 5rem;
     display: flex;

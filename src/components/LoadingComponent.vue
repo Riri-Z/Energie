@@ -12,7 +12,7 @@
   border-top: 20px solid $turquoise;
   width: 100px;
   height: 100px;
-  animation: spinner-9770a80b 4s linear infinite;
+  animation: spinner 1s linear infinite;
   top: 20vh;
   position: relative;
 }
