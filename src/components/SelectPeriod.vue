@@ -98,12 +98,14 @@ const onDateConsumptionChange = (payload) => {
   align-items: center;
   gap: 10px;
   font-family: Quicksand;
+  font-style: italic;
   &-start {
     display: flex;
     flex-direction: row;
     gap: 10px;
     &-label {
       font-family: Quicksand;
+      font-style: italic;
     }
     &-date-container {
       align-self: center;
@@ -114,6 +116,7 @@ const onDateConsumptionChange = (payload) => {
     display: flex;
     flex-direction: row;
     gap: 10px;
+
     &-date-container {
       align-self: center;
     }
@@ -122,10 +125,12 @@ const onDateConsumptionChange = (payload) => {
   &-refresh {
     &-btn {
       border-radius: 5px;
+      background-color: $white;
       &-text {
         text-align: center;
         margin: auto;
         font-family: Quicksand-bold;
+        font-style: italic;
       }
     }
   }
