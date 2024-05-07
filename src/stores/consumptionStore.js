@@ -28,7 +28,7 @@ export const useConsumptionStore = defineStore('consumption', {
           import.meta.env.VITE_API_URL +
             import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
             '/' +
-            import.meta.env.VITE_API_PATH_LAST_RECORD,
+            import.meta.env.VITE_API_PATH_LAST_RECORD
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -59,6 +59,7 @@ export const useConsumptionStore = defineStore('consumption', {
           'hc-key': entry.regionCodeISO3166,
           electricity: entry.consommation_brute_electricite_totale,
           gas: entry.consommation_brute_gaz_totale,
+          color: '#7AB2B2',
         };
       });
       const chartOption = {
@@ -85,6 +86,10 @@ export const useConsumptionStore = defineStore('consumption', {
         mapNavigation: {
           enabled: true,
         },
+        tooltip: {
+          backgroundColor: '#fff',
+          borderRadius: 5,
+        },
         colorAxis: {
           min: 0,
         },
@@ -99,7 +104,7 @@ export const useConsumptionStore = defineStore('consumption', {
             name: 'Consommation brute régionale',
             states: {
               hover: {
-                color: '#58e1c1',
+                color: '#EEF7FF',
               },
             },
             dataLabels: {
@@ -109,7 +114,7 @@ export const useConsumptionStore = defineStore('consumption', {
             allAreas: false,
             tooltip: {
               backgroundColor: null,
-              borderWidth: 0,
+              borderWidth: 2,
               shadow: false,
               useHTML: true,
               pointFormatter: function () {
@@ -138,7 +143,7 @@ export const useConsumptionStore = defineStore('consumption', {
     async getConsumptions(date = this.dateSelected) {
       try {
         const url = new URL(
-          import.meta.env.VITE_API_URL + import.meta.env.VITE_API_ENDPOINT_CONSUMPTION,
+          import.meta.env.VITE_API_URL + import.meta.env.VITE_API_ENDPOINT_CONSUMPTION
         );
         url.searchParams.append('date', formatDateToApi(date));
         const options = {
