@@ -2,12 +2,17 @@
 // data to display
 const props = defineProps({
   chartOptions: Object,
+  constructorType: String,
 });
 </script>
 
 <template>
   <div class="chart-container">
-    <highcharts v-if="props.chartOptions" :options="props.chartOptions"></highcharts>
+    <highcharts
+      v-if="props.chartOptions"
+      :constructorType="props.constructorType"
+      :options="props.chartOptions"
+    ></highcharts>
   </div>
 </template>
 

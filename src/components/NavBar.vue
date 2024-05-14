@@ -1,18 +1,34 @@
 <script setup>
 import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
+import electricalIcon from '@/assets/icons/electricalIcon.svg';
+import router from '@/router';
+import burgerMenuIcon from '@/assets/icons/burgerMenuIcon.svg';
+
+import { ref } from 'vue';
+
+const isMenuOpen = ref(false);
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+const reload = () => {
+  router.push({ path: '/' });
+};
 </script>
 
 <template>
   <div class="nav-bar">
-    <h1 class="nav-bar-logo">eco2Mix</h1>
-    <section class="nav-bar-element">
+    <img class="nav-bar-burger" :src="burgerMenuIcon" alt="burger-logo" @click="toggleMenu" />
+    <h1 class="nav-bar-logo" @click="reload">eco2Mix</h1>
+    <section class="nav-bar-element" :class="{ 'show-menu': isMenuOpen }">
       <router-link class="nav-bar-element-link" :to="'/'">
-        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
+        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="dashboard-logo" />
         <p class="nav-bar-element-link-label">Dashboard</p>
       </router-link>
-      <router-link class="nav-bar-element-link" :to="'/test'">
-        <img class="nav-bar-element-link-icon" :src="dashboardIcon" alt="my-logo" />
-        <p class="nav-bar-element-link-label">test</p>
+      <router-link class="nav-bar-element-link" :to="'/national-map'">
+        <img class="nav-bar-element-link-icon" :src="electricalIcon" alt="electricalIcon-logo" />
+        <p class="nav-bar-element-link-label">Consommation</p>
       </router-link>
     </section>
   </div>
@@ -25,35 +41,42 @@ import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
   z-index: 1000;
   height: 100vh;
   color: $white;
-  background-color: $darkblue;
+  background-color: #181745;
   font-size: 1.1rem;
-  max-width: 15%;
-  min-width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 0 30vh;
+  font-family: Quicksand-bold;
   &-logo {
     height: 5rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    cursor: pointer;
+  }
+  &-burger {
+    display: none;
   }
   &-element {
     display: flex;
     flex-direction: column;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: center;
     align-items: flex-start;
-    margin-left: 1.5rem;
 
     &-link {
       color: $white;
       text-decoration: none;
       align-items: center;
       display: flex;
-      width: 7.6rem;
-
+      padding-left: 16%;
       border-right-color: $darkblue;
-      border-right-width: 0.2em;
-      border-right-style: solid;
+      flex-direction: row;
+      justify-content: left;
+      min-width: 83%;
       &:hover {
         text-decoration: underline;
       }
@@ -66,12 +89,61 @@ import dashboardIcon from '@/assets/icons/dashboardIcon.svg';
 }
 
 .router-link-active {
-  border-right-color: $green;
+  border-right-color: $turquoise;
+  border-right-width: 0.2em;
+  border-right-style: solid;
 }
 
 @media only screen and (max-width: $screen-md) {
   .nav-bar {
-    display: none;
+    flex-direction: row;
+    min-width: 100%;
+    flex-wrap: wrap;
+    background-color: $blue;
+    flex: unset;
+    height: unset;
+    &-logo {
+      flex: 1;
+      height: unset;
+    }
+    &-burger {
+      margin: 1rem;
+      height: 30px;
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      cursor: pointer;
+      fill: $white;
+      cursor: pointer;
+      border-radius: 50%;
+
+      &:hover {
+        transform: scale(1.2);
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+      }
+    }
+    &-element {
+      display: none;
+
+      &-link {
+        border: unset;
+        width: unset;
+        min-width: unset;
+        padding-left: 0;
+        &-icon {
+          display: none;
+        }
+      }
+    }
+    .show-menu {
+      flex-basis: 100%;
+      display: flex;
+      flex-direction: row;
+      transition: all 600ms cubic-bezier(0.62, 0.04, 0.3, 1.56);
+      transition-delay: 100ms;
+      justify-content: space-around;
+    }
   }
 }
 </style>

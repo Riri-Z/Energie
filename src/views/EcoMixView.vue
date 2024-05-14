@@ -3,37 +3,42 @@
     <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
       Oops, something went wrong ...
     </div>
-
-    <section v-if="eco2MixStore.limitDateEnd" class="eco-mix-view-content-container-charts">
-      <!--      Production d'électricité par filière-->
+    <LoadingComponent v-if="eco2MixStore.getIsAllChartsLoaded" />
+    <main v-else class="eco-mix-view-content-container-charts">
+      <!--Production d'électricité par filière-->
       <ChartComponent
         v-if="eco2MixStore.chartOptionsEco2Mix"
         :chartOptions="eco2MixStore.chartOptionsEco2Mix"
+        constructorType="chart"
       />
 
-      <!--Consommation electrique en France-->
+      <!--Consommation electrique en France -->
       <ChartComponent
         v-if="eco2MixStore.chartOptionsElectricityConsumption"
         :chartOptions="eco2MixStore.chartOptionsElectricityConsumption"
+        constructorType="chart"
       />
 
-      <!--Émissions de CO2 par kWh produit en France-->
+      <!--Émissions de CO2 par kWh produit en France -->
       <ChartComponent
         v-if="eco2MixStore.chartCo2Emission"
         :chartOptions="eco2MixStore.chartCo2Emission"
+        constructorType="chart"
       />
 
       <!-- Trade Energie -->
       <ChartComponent
         v-if="eco2MixStore.chartCommercialTrade"
         :chartOptions="eco2MixStore.chartCommercialTrade"
+        constructorType="chart"
       />
-    </section>
+    </main>
   </div>
 </template>
 
 <script setup>
 import ChartComponent from '@/components/ChartComponent.vue';
+import LoadingComponent from '@/components/LoadingComponent.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 const eco2MixStore = useEco2mixStore();
 </script>
@@ -43,9 +48,11 @@ const eco2MixStore = useEco2mixStore();
   &-title {
     font-size: 1.8rem;
   }
+
   &-description {
     text-align: justify;
   }
+
   &-error {
     position: absolute;
     top: 50%;
@@ -53,12 +60,14 @@ const eco2MixStore = useEco2mixStore();
     transform: translate(-50%, -50%);
     font-size: 3rem;
   }
+
   &-container {
     &-charts {
       display: grid;
       grid-template-columns: 1fr 1fr;
       max-width: 90%;
       max-height: 90%;
+      gap: 5px;
     }
   }
 }
@@ -67,6 +76,7 @@ const eco2MixStore = useEco2mixStore();
     display: flex;
     flex-direction: column;
     align-items: center;
+
     &-container {
       &-charts {
         display: flex;

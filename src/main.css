@@ -20,3 +20,9 @@ h2 {
   padding-inline-start: 0;
   padding-inline-end: 0;
 }
+
+@media print {
+  .highcharts-tooltip {
+    display: none;
+  }
+}

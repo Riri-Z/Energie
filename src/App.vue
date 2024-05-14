@@ -1,9 +1,14 @@
 <script setup>
 import SelectPeriod from '@/components/SelectPeriod.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
+import { useConsumptionStore } from '@/stores/consumptionStore';
+import LoadingComponent from '@/components/LoadingComponent.vue';
 import NavBar from './components/NavBar.vue';
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
+eco2MixStore.setLoading(true);
+const consumptionStore = useConsumptionStore();
+consumptionStore.getLastDateAvailable();
 </script>
 <!-- TODO
 - Add BURGER MENU
@@ -13,8 +18,13 @@ eco2MixStore.getLastDateAvailable();
     <NavBar />
     <div class="app-content">
       <header class="app-content-header">
-        <h1 class="app-content-title">Données éCO2mix nationales</h1>
-        <div v-if="eco2MixStore.limitDateEnd" class="app-content-periode">
+        <h1 class="app-content-header-title">Données éCO2mix nationales</h1>
+        <LoadingComponent v-if="eco2MixStore.loading" />
+
+        <div
+          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected && !eco2MixStore.loading"
+          class="app-content-header-periode"
+        >
           <SelectPeriod />
         </div>
       </header>
@@ -35,25 +45,59 @@ eco2MixStore.getLastDateAvailable();
   margin: 0 auto;
   color: $white;
   display: flex;
+
   &-content {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin-top: 1rem;
     margin-left: 1rem;
-    &-periode {
-      display: flex;
-      justify-content: space-between;
+
+    &-header {
+      &-periode {
+        display: flex;
+        justify-content: space-between;
+      }
+      &-title {
+        font-family: Quicksand-Semi-Bold;
+      }
     }
   }
 }
 
 @media only screen and (max-width: $screen-md) {
   .app {
+    flex-direction: column;
+
     &-content {
       margin-left: 0;
       align-items: center;
       width: 100%;
+
+      &-header {
+        &-periode {
+          justify-content: center;
+        }
+
+        &-title {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs) {
+  .app {
+    &-content {
+      &-header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        &-title {
+          text-align: center;
+        }
+      }
     }
   }
 }

@@ -2,23 +2,50 @@ import { defineStore } from 'pinia';
 import { formatDateToApi, timeStampTotimeStampPlus2 } from '@/utils/convertDate';
 import { format } from 'date-fns';
 import { parseISO } from 'date-fns';
+import { EXPORT_MENU_CHARTS } from '@/utils/constants';
 
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
     chartOptionsEco2Mix: null,
+    chartOptionsEco2MixLoading: false,
     chartOptionsElectricityConsumption: null,
+    chartOptionsElectricityConsumptionLoading: false,
     chartCo2Emission: null,
+    chartCo2EmissionLoading: false,
     chartCommercialTrade: null,
+    chartCommercialTradeLoading: false,
     limitDateStart: null,
     dateStart: null,
     limitDateEnd: null,
     dateEnd: null,
     error: false,
+    loading: false,
   }),
-  getters: {},
+  getters: {
+    getLoading() {
+      return this.loading;
+    },
+    getIsAllChartsLoaded() {
+      return (
+        this.limitDateEnd &&
+        this.chartOptionsEco2MixLoading &&
+        this.chartCommercialTradeLoading &&
+        this.chartCo2EmissionLoading &&
+        this.chartOptionsElectricityConsumptionLoading
+      );
+    },
+  },
   actions: {
+    setLoading(value) {
+      this.loading = value;
+    },
+    setChartLoading(value, key) {
+      key = key + 'Loading';
+      this[key] = value;
+    },
     setChartOption(value, key) {
       this[key] = value;
+      this.setChartLoading(false, key);
     },
     setSelectDate(value, key) {
       this[key] = value;
@@ -29,7 +56,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
     async getLastDateAvailable() {
       try {
         const url = new URL(
-          import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PATH_LAST_RECORD,
+          import.meta.env.VITE_API_URL +
+          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+          '/' +
+          import.meta.env.VITE_API_PATH_LAST_RECORD
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -47,7 +77,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
 
           const keys = ['dateStart', 'limitDateEnd', 'limitDateStart', 'dateEnd', 'dateStart'];
           keys.forEach((key) => this.setSelectDate(lastDateAvailable, key));
-
+          this.setLoading(false);
           this.getECO2mixRealTimeData(lastDateAvailable, lastDateAvailable);
         }
       } catch (error) {
@@ -106,7 +136,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           type: 'area',
         },
         subtitle: {
-          text: 'Source: <a id="link-source" highcharts-link" href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
+          text: 'Source: <a id="link-source" href="https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature" target="_blank">ODRE</a>',
           align: 'left',
         },
         title: {
@@ -135,11 +165,15 @@ export const useEco2mixStore = defineStore('eco2mix', {
           verticalAlign: 'bottom',
         },
         series: seriesElictricityProduction,
-        accessibility: {
-          enabled: false,
-        },
         credits: {
           enabled: false,
+        },
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
         },
       };
 
@@ -170,7 +204,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           borderRadius: 20,
         },
         title: {
-          text: 'Consommation electrique en France',
+          text: 'Consommation électrique en France',
           align: 'center',
         },
         loading: {
@@ -216,6 +250,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
           },
         },
         series: seriesElectricityConsumption,
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       /* Co2 rate chart */
@@ -261,6 +302,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
           enabled: false,
         },
         series: seriesCo2Rate,
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       /* Trade chart */
@@ -369,6 +417,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
           },
         },
         series: series,
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       return {
@@ -381,7 +436,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
 
     async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(
-        import.meta.env.VITE_API_URL + import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION,
+        import.meta.env.VITE_API_URL +
+        import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+        '/' +
+        import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION
       );
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
@@ -405,6 +463,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
       }
     },
     async getECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
+      this.setChartLoading(true, 'chartOptionsEco2Mix');
+      this.setChartLoading(true, 'chartOptionsElectricityConsumption');
+      this.setChartLoading(true, 'chartCo2Emission');
+      this.setChartLoading(true, 'chartCommercialTrade');
       try {
         const result = await this.fetchECO2mixRealTimeData(start, end);
 
@@ -419,7 +481,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           this.setChartOption(chartOptionsEco2Mix, 'chartOptionsEco2Mix');
           this.setChartOption(
             chartOptionsElectricityConsumption,
-            'chartOptionsElectricityConsumption',
+            'chartOptionsElectricityConsumption'
           );
           this.setChartOption(chartOptionsCo2Rate, 'chartCo2Emission');
           this.setChartOption(configurationChartCommercialTrade, 'chartCommercialTrade');
