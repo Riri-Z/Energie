@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 import SelectPeriod from '@/components/SelectPeriod.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 import { useConsumptionStore } from '@/stores/consumptionStore';
@@ -9,6 +11,8 @@ eco2MixStore.getLastDateAvailable();
 eco2MixStore.setLoading(true);
 const consumptionStore = useConsumptionStore();
 consumptionStore.getLastDateAvailable();
+const route = useRoute();
+const isEco2MixTab = computed(() => route.name === 'Eco2Mix');
 </script>
 
 <template>
@@ -26,7 +30,10 @@ consumptionStore.getLastDateAvailable();
           <SelectPeriod />
         </div>
       </header>
-      <p class="app-disclaimer">
+      <p
+        class="app-disclaimer"
+        v-if="isEco2MixTab && eco2MixStore.limitDateEnd && !eco2MixStore.loading"
+      >
         * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
         suivants : PNG, JPEG, PDF, et SVG
       </p>
