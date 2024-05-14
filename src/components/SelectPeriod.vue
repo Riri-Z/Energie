@@ -100,7 +100,7 @@ const onDateConsumptionChange = (payload) => {
   font-family: Quicksand;
   font-style: italic;
   font-size: 1.2rem;
-
+  height: 4rem;
   &-start {
     display: flex;
     flex-direction: row;

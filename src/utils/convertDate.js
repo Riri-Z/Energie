@@ -1,3 +1,6 @@
+import { compareAsc, subWeeks } from 'date-fns';
+import { EXPORT_MENU_CHARTS, EXPORT_MENU_CHARTS_FILTERED } from './constants';
+
 export function isoStringToUtC2(isoString) {
   const date = new Date(isoString);
   date.setHours(date.getHours() + 2);
@@ -14,4 +17,15 @@ export function timeStampTotimeStampPlus2(timeStamp) {
 
 export function formatDateToApi(date) {
   return isoStringToUtC2(date.toISOString()).substring(0, 10);
+}
+
+export function isRangeLongerThanTwoWeeks(startDate, endDate) {
+  const twoWeeksAgo = subWeeks(endDate, 2);
+
+  // If startDateDate is before twoWeeksAgo  we don't allow exporting PNG/JEPG/PDF or SVG
+  // Otherwise, multer won't succeed because there is two much data
+  if (compareAsc(startDate, twoWeeksAgo) == -1) {
+    return EXPORT_MENU_CHARTS_FILTERED;
+  }
+  return EXPORT_MENU_CHARTS;
 }

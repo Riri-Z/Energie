@@ -10,9 +10,7 @@ eco2MixStore.setLoading(true);
 const consumptionStore = useConsumptionStore();
 consumptionStore.getLastDateAvailable();
 </script>
-<!-- TODO
-- Add BURGER MENU
--->
+
 <template>
   <div class="app">
     <NavBar />
@@ -28,6 +26,10 @@ consumptionStore.getLastDateAvailable();
           <SelectPeriod />
         </div>
       </header>
+      <p class="app-disclaimer">
+        * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
+        suivants : PNG, JPEG, PDF, et SVG
+      </p>
       <section class="app-content-main">
         <RouterView />
       </section>
@@ -63,6 +65,13 @@ consumptionStore.getLastDateAvailable();
       }
     }
   }
+  &-disclaimer {
+    padding: 0;
+    margin: 0;
+    font-size: 0.7rem;
+    font-style: italic;
+    color: $white;
+  }
 }
 
 @media only screen and (max-width: $screen-md) {
@@ -75,6 +84,9 @@ consumptionStore.getLastDateAvailable();
       width: 100%;
 
       &-header {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
         &-periode {
           justify-content: center;
         }
