@@ -10,11 +10,13 @@
   border: 20px solid $white;
   border-radius: 50%;
   border-top: 20px solid $turquoise;
-  width: 100px;
-  height: 100px;
+  width: 2rem;
+  height: 2rem;
   animation: spinner 1s linear infinite;
-  top: 20vh;
-  position: relative;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 @keyframes spinner {
   0% {
