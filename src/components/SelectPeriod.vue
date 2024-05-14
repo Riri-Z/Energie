@@ -127,13 +127,23 @@ const onDateConsumptionChange = (payload) => {
 
   &-refresh {
     &-btn {
-      border-radius: 5px;
-      background-color: $white;
+      font-size: 100%;
+      font-weight: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      width: 7rem;
+      height: 1.5rem;
+      border-radius: 0.375rem;
+      background-color: #f6f4ec;
       &-text {
         text-align: center;
         margin: auto;
         font-family: Quicksand-bold;
-        font-style: italic;
+        font-size: 0.75rem;
       }
     }
   }
