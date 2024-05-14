@@ -9,6 +9,21 @@ import accessibility from 'highcharts/modules/accessibility';
 import HighchartsVue from 'highcharts-vue';
 import App from './App.vue';
 
+Highcharts.setOptions({
+  plotOptions: {
+    series: {
+      states: {
+        hover: {
+          enabled: true,
+          halo: {
+            size: 0,
+          },
+        },
+      },
+    },
+  },
+});
+
 Maps(Highcharts);
 exporting(Highcharts);
 accessibility(Highcharts);
