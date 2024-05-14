@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { formatDateToApi, timeStampTotimeStampPlus2 } from '@/utils/convertDate';
 import { format } from 'date-fns';
 import { parseISO } from 'date-fns';
+import { EXPORT_MENU_CHARTS } from '@/utils/constants';
 
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
@@ -56,9 +57,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-            import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-            '/' +
-            import.meta.env.VITE_API_PATH_LAST_RECORD
+          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+          '/' +
+          import.meta.env.VITE_API_PATH_LAST_RECORD
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -167,6 +168,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
         credits: {
           enabled: false,
         },
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       /* Electricity consumption chart */
@@ -242,6 +250,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
           },
         },
         series: seriesElectricityConsumption,
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       /* Co2 rate chart */
@@ -287,6 +302,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
           enabled: false,
         },
         series: seriesCo2Rate,
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       /* Trade chart */
@@ -395,6 +417,13 @@ export const useEco2mixStore = defineStore('eco2mix', {
           },
         },
         series: series,
+        exporting: {
+          buttons: {
+            contextButton: {
+              menuItems: EXPORT_MENU_CHARTS,
+            },
+          },
+        },
       };
 
       return {
@@ -408,9 +437,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(
         import.meta.env.VITE_API_URL +
-          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-          '/' +
-          import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION
+        import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+        '/' +
+        import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION
       );
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
