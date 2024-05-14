@@ -10,7 +10,6 @@ import { ref } from 'vue';
 import { LIMIT_START_DATE_DATA } from '@/utils/constants';
 const route = useRoute();
 const isEco2MixTab = computed(() => route.name === 'Eco2Mix');
-
 /* eco2MixStore */
 const eco2MixStore = useEco2mixStore();
 const dateStart = ref(eco2MixStore.dateStart);
@@ -35,6 +34,7 @@ const ondateStartChange = (payload) => {
 };
 const onDateConsumptionChange = (payload) => {
   const key = 'dateSelected';
+  consumptionStore.setLoading(true);
   consumptionStore.setSelectDate(payload, key);
   return consumptionStore.getConsumptions(payload);
 };
@@ -82,7 +82,7 @@ const onDateConsumptionChange = (payload) => {
           v-model="dateSelected"
           @update:modelValue="onDateConsumptionChange"
           :locale="fr"
-          :upper-limit="dateSelected"
+          :upper-limit="limitDateEnd"
           :lower-limit="new Date(LIMIT_START_DATE_DATA)"
           inputFormat="dd-MM-yyyy"
         />

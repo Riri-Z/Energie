@@ -18,8 +18,12 @@ export const useEco2mixStore = defineStore('eco2mix', {
     limitDateEnd: null,
     dateEnd: null,
     error: false,
+    loading: false,
   }),
   getters: {
+    getLoading() {
+      return this.loading;
+    },
     getIsAllChartsLoaded() {
       return (
         this.limitDateEnd &&
@@ -31,6 +35,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     },
   },
   actions: {
+    setLoading(value) {
+      this.loading = value;
+    },
     setChartLoading(value, key) {
       key = key + 'Loading';
       this[key] = value;
@@ -69,7 +76,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
 
           const keys = ['dateStart', 'limitDateEnd', 'limitDateStart', 'dateEnd', 'dateStart'];
           keys.forEach((key) => this.setSelectDate(lastDateAvailable, key));
-
+          this.setLoading(false);
           this.getECO2mixRealTimeData(lastDateAvailable, lastDateAvailable);
         }
       } catch (error) {

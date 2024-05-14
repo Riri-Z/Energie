@@ -2,10 +2,11 @@
 import SelectPeriod from '@/components/SelectPeriod.vue';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 import { useConsumptionStore } from '@/stores/consumptionStore';
-
+import LoadingComponent from '@/components/LoadingComponent.vue';
 import NavBar from './components/NavBar.vue';
 const eco2MixStore = useEco2mixStore();
 eco2MixStore.getLastDateAvailable();
+eco2MixStore.setLoading(true);
 const consumptionStore = useConsumptionStore();
 consumptionStore.getLastDateAvailable();
 </script>
@@ -18,8 +19,10 @@ consumptionStore.getLastDateAvailable();
     <div class="app-content">
       <header class="app-content-header">
         <h1 class="app-content-header-title">Données éCO2mix nationales</h1>
+        <LoadingComponent v-if="eco2MixStore.loading" />
+
         <div
-          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected"
+          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected && !eco2MixStore.loading"
           class="app-content-header-periode"
         >
           <SelectPeriod />

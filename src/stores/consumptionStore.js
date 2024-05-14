@@ -10,9 +10,18 @@ export const useConsumptionStore = defineStore('consumption', {
     dateSelected: null,
     limitDateEnd: null,
     dateEnd: null,
+    loading: false,
     error: false,
   }),
+  getters: {
+    getLoading() {
+      return this.loading;
+    },
+  },
   actions: {
+    setLoading(value) {
+      this.loading = value;
+    },
     setChartOption(value) {
       this.frenchMapOptions = value;
     },
@@ -136,8 +145,8 @@ export const useConsumptionStore = defineStore('consumption', {
           },
         ],
       };
-
       this.setChartOption(chartOption);
+      this.setLoading(false);
     },
     // Une seul date, et non un range
     async getConsumptions(date = this.dateSelected) {
