@@ -5,7 +5,7 @@
     </div>
     <LoadingComponent v-if="eco2MixStore.getIsAllChartsLoaded" />
     <div v-else class="eco-mix-view-content-container">
-      <p class="eco-mix-view-content-container-disclaimer">
+      <p v-if="eco2MixStore.chartOptionsEco2Mix" class="eco-mix-view-content-container-disclaimer">
         * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
         suivants : PNG, JPEG, PDF, et SVG
       </p>
@@ -94,6 +94,7 @@ const eco2MixStore = useEco2mixStore();
     align-items: center;
 
     &-container {
+      align-items: center;
       &-charts {
         display: flex;
         flex-direction: column;
