@@ -53,9 +53,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-          '/' +
-          import.meta.env.VITE_API_PATH_LAST_RECORD
+            import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+            '/' +
+            import.meta.env.VITE_API_PATH_LAST_RECORD
         );
         const headers = {
           'Content-Type': 'application/json',
@@ -74,6 +74,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           const keys = ['dateStart', 'limitDateEnd', 'limitDateStart', 'dateEnd', 'dateStart'];
           keys.forEach((key) => this.setSelectDate(lastDateAvailable, key));
           this.setLoading(false);
+          this.setError(false);
           this.getECO2mixRealTimeData(lastDateAvailable, lastDateAvailable);
         }
       } catch (error) {
@@ -433,9 +434,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     async fetchECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
       const url = new URL(
         import.meta.env.VITE_API_URL +
-        import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
-        '/' +
-        import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION
+          import.meta.env.VITE_API_ENDPOINT_ECO2MIX +
+          '/' +
+          import.meta.env.VITE_API_PATH_TOTAL_PRODUCTION
       );
       url.searchParams.append('startDate', formatDateToApi(start));
       url.searchParams.append('endDate', formatDateToApi(end));
@@ -455,6 +456,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
         return await response.json();
       } catch (error) {
         console.error('Error fetching ECO2mix data:', error);
+        this.setError(true);
         throw new Error('Failed to fetch ECO2mix data');
       }
     },
@@ -477,6 +479,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
             chartOptionsCo2Rate,
             configurationChartCommercialTrade,
           ]);
+          this.setError(false);
           this.setLoading(false);
           return 'Data fetched successfully';
         } else {
