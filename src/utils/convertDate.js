@@ -1,4 +1,4 @@
-import { compareAsc, subWeeks } from 'date-fns';
+import { compareAsc, subMonths, subWeeks } from 'date-fns';
 import { EXPORT_MENU_CHARTS, EXPORT_MENU_CHARTS_FILTERED } from './constants';
 
 export function isoStringToUtC2(isoString) {
@@ -28,4 +28,14 @@ export function isRangeLongerThanTwoWeeks(startDate, endDate) {
     return EXPORT_MENU_CHARTS_FILTERED;
   }
   return EXPORT_MENU_CHARTS;
+}
+export function isRangeLongerThanSixMonths(startDate, endDate) {
+  const sixMonthAgo = subMonths(endDate, 6);
+
+  // If startDate before sixMonthAgo we don't allow call api
+  // Otherwise, RENDER(server)  won't succeed because there is two much data
+  if (compareAsc(startDate, sixMonthAgo) == -1) {
+    return true;
+  }
+  return false;
 }

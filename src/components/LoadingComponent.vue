@@ -26,4 +26,9 @@
     transform: rotate(360deg);
   }
 }
+@media only screen and (max-width: $screen-md) {
+  .loader {
+    left: 45%;
+  }
+}
 </style>

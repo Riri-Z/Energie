@@ -1,10 +1,9 @@
 <template>
-  <div class="eco-mix-view-content">
-    <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
-      Oops, il semble que la période sélectionnée soit trop grande. Pour de meilleurs résultats,
-      veuillez essayer une période qui ne dépasse pas six mois :)
+  <LoadingComponent v-if="eco2MixStore.getLoading && !eco2MixStore.getError" />
+  <div v-if="eco2MixStore" class="eco-mix-view-content">
+    <div class="eco-mix-view-content-error" v-if="eco2MixStore.getError">
+      Le serveur est actuellement hors service. Veuillez réessayer plus tard :)
     </div>
-    <LoadingComponent v-if="eco2MixStore.getLoading && !eco2MixStore.getError" />
     <div v-else class="eco-mix-view-content-container">
       <p
         v-if="eco2MixStore.getchartsConfig.length > 0"
