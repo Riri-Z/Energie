@@ -462,21 +462,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
       try {
         const result = await this.fetchECO2mixRealTimeData(start, end);
 
-        if (Array.isArray(result.data) && result.data.length > 0) {
-          const data = this.transformDataForChartEco2mix(result.data);
-          const {
-            chartOptionsEco2Mix,
-            chartOptionsElectricityConsumption,
-            chartOptionsCo2Rate,
-            configurationChartCommercialTrade,
-          } = data;
+        if (Array.isArray(result) && result.length > 0) {
 
-          this.setChartsConfig([
-            chartOptionsEco2Mix,
-            chartOptionsElectricityConsumption,
-            chartOptionsCo2Rate,
-            configurationChartCommercialTrade,
-          ]);
+          this.setChartsConfig(result);
           this.setLoading(false);
           return 'Data fetched successfully';
         } else {
