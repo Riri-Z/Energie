@@ -3,41 +3,20 @@
     <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
       Oops, something went wrong ...
     </div>
-    <LoadingComponent v-if="eco2MixStore.getIsAllChartsLoaded" />
+    <LoadingComponent v-if="eco2MixStore.getLoading" />
     <div v-else class="eco-mix-view-content-container">
-      <p v-if="eco2MixStore.chartOptionsEco2Mix" class="eco-mix-view-content-container-disclaimer">
+      <p class="eco-mix-view-content-container-disclaimer">
         * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
         suivants : PNG, JPEG, PDF, et SVG
       </p>
 
       <main class="eco-mix-view-content-container-charts">
-        <!--Production d'électricité par filière-->
-        <ChartComponent
-          v-if="eco2MixStore.chartOptionsEco2Mix"
-          :chartOptions="eco2MixStore.chartOptionsEco2Mix"
-          constructorType="chart"
-        />
-
-        <!--Consommation electrique en France -->
-        <ChartComponent
-          v-if="eco2MixStore.chartOptionsElectricityConsumption"
-          :chartOptions="eco2MixStore.chartOptionsElectricityConsumption"
-          constructorType="chart"
-        />
-
-        <!--Émissions de CO2 par kWh produit en France -->
-        <ChartComponent
-          v-if="eco2MixStore.chartCo2Emission"
-          :chartOptions="eco2MixStore.chartCo2Emission"
-          constructorType="chart"
-        />
-
-        <!-- Trade Energie -->
-        <ChartComponent
-          v-if="eco2MixStore.chartCommercialTrade"
-          :chartOptions="eco2MixStore.chartCommercialTrade"
-          constructorType="chart"
-        />
+        <template
+          v-bind:key="chartConfig.title"
+          v-for="chartConfig in eco2MixStore.getchartsConfig"
+        >
+          <ChartComponent :chartOptions="chartConfig" constructorType="chart" />
+        </template>
       </main>
     </div>
   </div>

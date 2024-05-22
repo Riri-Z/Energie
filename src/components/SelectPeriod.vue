@@ -22,6 +22,7 @@ const consumptionStore = useConsumptionStore();
 const dateSelected = ref(consumptionStore.dateSelected);
 
 const updateChart = () => {
+  eco2MixStore.setLoading(true);
   eco2MixStore.getECO2mixRealTimeData();
 };
 const ondateEndChange = (payload) => {

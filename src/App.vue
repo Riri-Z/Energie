@@ -20,7 +20,7 @@ consumptionStore.getLastDateAvailable();
         <LoadingComponent v-if="eco2MixStore.loading" />
 
         <div
-          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected && !eco2MixStore.loading"
+          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected"
           class="app-content-header-periode"
         >
           <SelectPeriod />
