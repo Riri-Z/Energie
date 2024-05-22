@@ -2,11 +2,14 @@
   <div class="eco-mix-view-content">
     <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
       Oops, il semble que la période sélectionnée soit trop grande. Pour de meilleurs résultats,
-      veuillez essayer une période qui ne dépasse pas six mois.
+      veuillez essayer une période qui ne dépasse pas six mois :)
     </div>
-    <LoadingComponent v-else-if="eco2MixStore.getLoading" />
+    <LoadingComponent v-if="eco2MixStore.getLoading && !eco2MixStore.getError" />
     <div v-else class="eco-mix-view-content-container">
-      <p class="eco-mix-view-content-container-disclaimer">
+      <p
+        v-if="eco2MixStore.getchartsConfig.length > 0"
+        class="eco-mix-view-content-container-disclaimer"
+      >
         * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
         suivants : PNG, JPEG, PDF, et SVG
       </p>

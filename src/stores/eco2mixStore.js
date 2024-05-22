@@ -21,6 +21,9 @@ export const useEco2mixStore = defineStore('eco2mix', {
     getchartsConfig() {
       return this.chartsConfig;
     },
+    getError() {
+      return this.error;
+    },
     getLoading() {
       return this.loading;
     },
@@ -79,6 +82,8 @@ export const useEco2mixStore = defineStore('eco2mix', {
         }
       } catch (error) {
         this.setError(true);
+        this.setLoading(false);
+
         console.error(error);
       }
     },
@@ -457,7 +462,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
       } catch (error) {
         console.error('Error fetching ECO2mix data:', error);
         this.setError(true);
-        throw new Error('Failed to fetch ECO2mix data');
+        this.setLoading(false);
       }
     },
     async getECO2mixRealTimeData(start = this.dateStart, end = this.dateEnd) {
@@ -484,6 +489,7 @@ export const useEco2mixStore = defineStore('eco2mix', {
           return 'Data fetched successfully';
         } else {
           this.setError(true);
+          this.setLoading(false);
           return 'No data available';
         }
       } catch (error) {
