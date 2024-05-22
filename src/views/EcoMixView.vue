@@ -1,9 +1,10 @@
 <template>
   <div class="eco-mix-view-content">
     <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
-      Oops, something went wrong ...
+      Oops, il semble que la période sélectionnée soit trop grande. Pour de meilleurs résultats,
+      veuillez essayer une période qui ne dépasse pas six mois.
     </div>
-    <LoadingComponent v-if="eco2MixStore.getLoading" />
+    <LoadingComponent v-else-if="eco2MixStore.getLoading" />
     <div v-else class="eco-mix-view-content-container">
       <p class="eco-mix-view-content-container-disclaimer">
         * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
@@ -44,7 +45,7 @@ const eco2MixStore = useEco2mixStore();
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 
   &-container {
