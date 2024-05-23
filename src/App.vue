@@ -10,9 +10,7 @@ eco2MixStore.setLoading(true);
 const consumptionStore = useConsumptionStore();
 consumptionStore.getLastDateAvailable();
 </script>
-<!-- TODO
-- Add BURGER MENU
--->
+
 <template>
   <div class="app">
     <NavBar />
@@ -22,7 +20,7 @@ consumptionStore.getLastDateAvailable();
         <LoadingComponent v-if="eco2MixStore.loading" />
 
         <div
-          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected && !eco2MixStore.loading"
+          v-if="eco2MixStore.limitDateEnd && consumptionStore.dateSelected"
           class="app-content-header-periode"
         >
           <SelectPeriod />
@@ -75,6 +73,9 @@ consumptionStore.getLastDateAvailable();
       width: 100%;
 
       &-header {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
         &-periode {
           justify-content: center;
         }

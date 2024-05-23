@@ -1,38 +1,27 @@
 <template>
-  <div class="eco-mix-view-content">
-    <div class="eco-mix-view-content-error" v-if="eco2MixStore.error">
-      Oops, something went wrong ...
+  <LoadingComponent v-if="eco2MixStore.getLoading && !eco2MixStore.getError" />
+  <div v-if="eco2MixStore" class="eco-mix-view-content">
+    <div class="eco-mix-view-content-error" v-if="eco2MixStore.getError">
+      Le serveur est actuellement hors service. Veuillez réessayer plus tard :)
     </div>
-    <LoadingComponent v-if="eco2MixStore.getIsAllChartsLoaded" />
-    <main v-else class="eco-mix-view-content-container-charts">
-      <!--Production d'électricité par filière-->
-      <ChartComponent
-        v-if="eco2MixStore.chartOptionsEco2Mix"
-        :chartOptions="eco2MixStore.chartOptionsEco2Mix"
-        constructorType="chart"
-      />
+    <div v-else class="eco-mix-view-content-container">
+      <p
+        v-if="eco2MixStore.getchartsConfig.length > 0"
+        class="eco-mix-view-content-container-disclaimer"
+      >
+        * Si la période est supérieur à deux semaines, vous ne pourrez pas télécharger les formats
+        suivants : PNG, JPEG, PDF, et SVG
+      </p>
 
-      <!--Consommation electrique en France -->
-      <ChartComponent
-        v-if="eco2MixStore.chartOptionsElectricityConsumption"
-        :chartOptions="eco2MixStore.chartOptionsElectricityConsumption"
-        constructorType="chart"
-      />
-
-      <!--Émissions de CO2 par kWh produit en France -->
-      <ChartComponent
-        v-if="eco2MixStore.chartCo2Emission"
-        :chartOptions="eco2MixStore.chartCo2Emission"
-        constructorType="chart"
-      />
-
-      <!-- Trade Energie -->
-      <ChartComponent
-        v-if="eco2MixStore.chartCommercialTrade"
-        :chartOptions="eco2MixStore.chartCommercialTrade"
-        constructorType="chart"
-      />
-    </main>
+      <main class="eco-mix-view-content-container-charts">
+        <template
+          v-bind:key="chartConfig.title"
+          v-for="chartConfig in eco2MixStore.getchartsConfig"
+        >
+          <ChartComponent :chartOptions="chartConfig" constructorType="chart" />
+        </template>
+      </main>
+    </div>
   </div>
 </template>
 
@@ -58,10 +47,19 @@ const eco2MixStore = useEco2mixStore();
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 
   &-container {
+    display: flex;
+    flex-direction: column;
+    &-disclaimer {
+      padding: 0;
+      margin: 0;
+      font-size: 0.7rem;
+      font-style: italic;
+      color: $white;
+    }
     &-charts {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -78,6 +76,7 @@ const eco2MixStore = useEco2mixStore();
     align-items: center;
 
     &-container {
+      align-items: center;
       &-charts {
         display: flex;
         flex-direction: column;

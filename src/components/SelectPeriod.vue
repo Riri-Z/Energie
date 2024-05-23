@@ -1,13 +1,13 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import Datepicker from 'vue3-datepicker';
 import { fr } from 'date-fns/locale';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 import { useConsumptionStore } from '@/stores/consumptionStore';
-import { ref } from 'vue';
 import { LIMIT_START_DATE_DATA } from '@/utils/constants';
+import { isRangeLongerThanSixMonths } from '@/utils/convertDate';
 const route = useRoute();
 const isEco2MixTab = computed(() => route.name === 'Eco2Mix');
 /* eco2MixStore */
@@ -21,8 +21,17 @@ const limitDateEnd = ref(eco2MixStore.limitDateEnd);
 const consumptionStore = useConsumptionStore();
 const dateSelected = ref(consumptionStore.dateSelected);
 
+const isError = ref(false);
 const updateChart = () => {
-  eco2MixStore.getECO2mixRealTimeData();
+  if (isRangeLongerThanSixMonths(dateStart.value, dateEnd.value)) {
+    isError.value = true;
+  } else {
+    isError.value = false;
+    eco2MixStore.setError(false);
+    eco2MixStore.setChartsConfig([]);
+    eco2MixStore.setLoading(true);
+    eco2MixStore.getECO2mixRealTimeData();
+  }
 };
 const ondateEndChange = (payload) => {
   const key = 'dateEnd';
@@ -70,6 +79,15 @@ const onDateConsumptionChange = (payload) => {
     </div>
     <div class="selection-periode-refresh">
       <button class="selection-periode-refresh-btn" @click="updateChart">
+        <span
+          class="selection-periode-refresh-btn-tooltiptext"
+          :class="{ 'tooltip-error': isError }"
+        >
+          <div class="arrow-up"></div>
+
+          Veuillez sélectionner une période maximale de 6 mois</span
+        >
+
         <p class="selection-periode-refresh-btn-text">Appliquer</p>
       </button>
     </div>
@@ -100,7 +118,7 @@ const onDateConsumptionChange = (payload) => {
   font-family: Quicksand;
   font-style: italic;
   font-size: 1.2rem;
-
+  height: 4rem;
   &-start {
     display: flex;
     flex-direction: row;
@@ -139,6 +157,25 @@ const onDateConsumptionChange = (payload) => {
       height: 1.5rem;
       border-radius: 0.375rem;
       background-color: #f6f4ec;
+      position: relative;
+      &-tooltiptext {
+        display: none;
+        top: -0.5rem;
+        font-size: 1rem;
+        left: 8rem;
+        width: 25rem;
+        background-color: rgba(252, 252, 252, 0.685);
+        color: white;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+      }
+      &:hover .selection-periode-refresh-btn-tooltiptext {
+        display: unset;
+      }
+
       &-text {
         text-align: center;
         margin: auto;
@@ -146,6 +183,39 @@ const onDateConsumptionChange = (payload) => {
         font-size: 0.75rem;
       }
     }
+  }
+}
+.tooltip-error {
+  display: unset !important;
+  background-color: red;
+}
+@media only screen and (max-width: $screen-md) {
+  .selection-periode-refresh-btn {
+    &:hover {
+      &-tooltiptext {
+        display: none;
+      }
+    }
+    &:hover .selection-periode-refresh-btn-tooltiptext {
+      display: none;
+    }
+  }
+  .tooltip-error {
+    top: 2rem;
+    font-size: 0.75rem;
+    left: -1.75rem;
+    width: 10rem;
+  }
+
+  .arrow-up {
+    width: 0;
+    position: relative;
+    top: -0.55rem;
+    left: 4.75rem;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #ff0000;
   }
 }
 </style>
