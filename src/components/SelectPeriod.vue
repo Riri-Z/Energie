@@ -7,7 +7,7 @@ import { fr } from 'date-fns/locale';
 import { useEco2mixStore } from '@/stores/eco2mixStore';
 import { useConsumptionStore } from '@/stores/consumptionStore';
 import { LIMIT_START_DATE_DATA } from '@/utils/constants';
-import { isRangeLongerThanSixMonths } from '@/utils/convertDate';
+import { isRangeLongerThanSixMonths } from '@/utils/dateUtils';
 const route = useRoute();
 const isEco2MixTab = computed(() => route.name === 'Eco2Mix');
 /* eco2MixStore */

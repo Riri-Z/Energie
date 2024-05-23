@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { formatDateToApi } from '@/utils/convertDate';
+import { formatDateToApi } from '@/utils/dateUtils';
 import { parseISO } from 'date-fns';
 import frenchMap from '@highcharts/map-collection/countries/fr/fr-all.topo.json';
 
@@ -35,9 +35,9 @@ export const useConsumptionStore = defineStore('consumption', {
       try {
         const url = new URL(
           import.meta.env.VITE_API_URL +
-            import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
-            '/' +
-            import.meta.env.VITE_API_PATH_LAST_RECORD
+          import.meta.env.VITE_API_ENDPOINT_CONSUMPTION +
+          '/' +
+          import.meta.env.VITE_API_PATH_LAST_RECORD
         );
         const headers = {
           'Content-Type': 'application/json',
