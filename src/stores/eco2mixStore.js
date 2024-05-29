@@ -93,6 +93,10 @@ export const useEco2mixStore = defineStore('eco2mix', {
       for (const element of values) {
         element.timeStamp = Date.parse(element.date_heure);
       }
+
+      // Sort data for HighChart.js performance
+      values.sort((a, b) => a.timeStamp - b.timeStamp);
+
       /* Mix energie chart */
       const seriesElictricityProduction = [
         {
