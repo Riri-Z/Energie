@@ -108,6 +108,7 @@ const reload = () => {
     }
     &-burger {
       margin: 1rem;
+      margin-bottom: 0.5rem;
       height: 30px;
       width: 30px;
       display: flex;

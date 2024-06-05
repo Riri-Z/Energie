@@ -16,7 +16,7 @@ const dateStart = ref(eco2MixStore.dateStart);
 const dateEnd = ref(eco2MixStore.dateEnd);
 const limitDateStart = ref(eco2MixStore.limitDateStart);
 const limitDateEnd = ref(eco2MixStore.limitDateEnd);
-
+const limitDateFrenchMap = ref('2024-02-29');
 /* consumptionStore */
 const consumptionStore = useConsumptionStore();
 const dateSelected = ref(consumptionStore.dateSelected);
@@ -100,7 +100,7 @@ const onDateConsumptionChange = (payload) => {
           v-model="dateSelected"
           @update:modelValue="onDateConsumptionChange"
           :locale="fr"
-          :upper-limit="limitDateEnd"
+          :upper-limit="limitDateFrenchMap"
           :lower-limit="new Date(LIMIT_START_DATE_DATA)"
           inputFormat="dd-MM-yyyy"
         />

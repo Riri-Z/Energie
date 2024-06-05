@@ -4,8 +4,7 @@ import {
   isRangeLongerThanTwoWeeks,
   timeStampTotimeStampPlus2,
 } from '@/utils/dateUtils';
-import { format } from 'date-fns';
-import { parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const useEco2mixStore = defineStore('eco2mix', {
   state: () => ({
@@ -249,6 +248,11 @@ export const useEco2mixStore = defineStore('eco2mix', {
           shared: true,
         },
         plotOptions: {
+          line: {
+            marker: {
+              enabled: false
+            }
+          },
           series: {
             label: {
               connectorAllowed: false,
@@ -418,6 +422,11 @@ export const useEco2mixStore = defineStore('eco2mix', {
           enabled: false,
         },
         plotOptions: {
+          line: {
+            marker: {
+              enabled: false
+            }
+          },
           column: {
             borderRadius: '25%',
           },
